@@ -1,0 +1,32 @@
+{
+    "content": {
+        "ru": {
+            "home": {
+                "eyebrow": "Carclub · Аренда авто",
+                "title": "Аренда авто",
+                "title_accent": "в Баку"
+            }
+        }
+    },
+    "contacts": {
+        "phone1": "+994 55 608 08 06",
+        "phone2": "+994 77 380 95 85",
+        "whatsapp": "994556080806",
+        "whatsapp2": "994773809585",
+        "email": "info@carclub.az",
+        "tiktok": "https://vt.tiktok.com/ZSLGJaBq5/",
+        "instagram": "",
+        "facebook": "",
+        "map_query": "baku"
+    },
+    "settings": {
+        "brand": "Carclub",
+        "notify_email": "info@carclub.az",
+        "ga_id": "",
+        "host": "",
+        "home_cars": 6,
+        "hero_image": "img/site/rent-a-car-for-someone-else.rendition.medium.jpg",
+        "about_image": "img/site/rentacar.jpg",
+        "og_image": "img/site/rentacar.jpg"
+    }
+}

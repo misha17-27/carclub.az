@@ -1,0 +1,7 @@
+storage/messages.json
+storage/login-throttle.json
+storage/admin-users.json
+*.log
+.DS_Store
+Thumbs.db
+storage/admin-password.txt

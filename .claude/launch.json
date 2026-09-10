@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "carclub",
+      "runtimeExecutable": "C:/Users/Asus/.config/herd/bin/php83/php.exe",
+      "runtimeArgs": ["-S", "127.0.0.1:8031", "-t", "D:/carclub.az/yeni-php"],
+      "port": 8031,
+      "url": "http://127.0.0.1:8031"
+    }
+  ]
+}
