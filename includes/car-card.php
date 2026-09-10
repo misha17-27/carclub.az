@@ -4,8 +4,12 @@ $title = car_title($car);
 $specs = car_specs($car);
 $href  = car_url($car);
 $tags  = trim(($car['body'] ?? '') . ' ' . strtolower($car['brand'] ?? '') . ' ' . ($car['fuel'] ?? ''));
+
+/* The catalogue sets $ACTIVE_FILTER so a ?f=… link renders already filtered,
+   without a flash of the full grid before the script runs. */
+$hidden = isset($ACTIVE_FILTER) && $ACTIVE_FILTER !== 'all' && ($car['body'] ?? '') !== $ACTIVE_FILTER;
 ?>
-<article class="car reveal" data-car data-tags="<?= e($tags) ?>">
+<article class="car reveal" data-car data-tags="<?= e($tags) ?>" <?= $hidden ? 'hidden' : '' ?>>
     <a class="car__media" href="<?= e($href) ?>" tabindex="-1" aria-hidden="true">
         <img src="<?= e(img(ltrim(car_cover($car), 'img/'))) ?>" alt="<?= e($title) ?>" loading="lazy" width="800" height="500">
         <?php if (!empty($car['body'])): ?>

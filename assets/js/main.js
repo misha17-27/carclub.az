@@ -58,7 +58,21 @@
         var cards = doc.querySelectorAll('[data-car]');
         var empty = doc.getElementById('cars-empty');
         var grid = doc.querySelector('.cars-grid');
-        var current = 'all';
+        var heading = doc.getElementById('cars-title');
+        var active = doc.querySelector('.chip.is-active');
+        var current = active ? active.getAttribute('data-filter') : 'all';
+
+        /* the heading follows the chosen category, the way the old site had it */
+        var retitle = function (ch, val) {
+            if (!heading) return;
+            var base = heading.getAttribute('data-default') || '';
+            var label = ch.getAttribute('data-label') || base;
+            heading.textContent = val === 'all' ? base : label;
+            var full = heading.getAttribute('data-title-default') || doc.title;
+            doc.title = val === 'all'
+                ? full
+                : label + (heading.getAttribute('data-title-suffix') || '');
+        };
 
         var apply = function (val) {
             var shown = 0;
@@ -80,6 +94,7 @@
                 x.classList.toggle('is-active', on);
                 x.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
+            retitle(ch, v);
             if (grid && animate) {
                 grid.classList.add('is-swapping');
                 setTimeout(function () {

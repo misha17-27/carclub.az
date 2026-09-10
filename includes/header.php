@@ -25,7 +25,7 @@ $mail = cfg('contacts.email', '');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= e($SEO_TITLE ?? $brand) ?></title>
     <meta name="description" content="<?= e($SEO_DESC ?? '') ?>">
-    <link rel="canonical" href="<?= e(canonical()) ?>">
+    <link rel="canonical" href="<?= e($CANONICAL ?? canonical()) ?>">
     <?php foreach (langs() as $code => $l): ?>
         <link rel="alternate" hreflang="<?= e($code) ?>" href="<?= e(site_host() . current_url($code)) ?>">
     <?php endforeach; ?>

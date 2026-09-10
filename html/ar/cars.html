@@ -114,7 +114,9 @@
             <a href="index.html">الرئيسية</a>
             <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg><span>السيارات</span>
         </nav>
-        <h1 class="h1">السيارات</h1>
+        <h1 class="h1" id="cars-title" data-default="السيارات"
+            data-title-suffix=" — السيارات | Carclub"
+            data-title-default="السيارات — مجموعة واسعة من السيارات للإيجار في باكو | Carclub.az">السيارات</h1>
                     <p class="lead" style="max-width:64ch;margin-top:14px">اختر سيارة من الأسطول — جميعها حديثة ومُصانة ومؤمّنة بالكامل. التوصيل داخل باكو مجاني.</p>
             </div>
 </section>
@@ -122,19 +124,22 @@
 <section class="section">
     <div class="wrap">
         <div class="filters" role="group" aria-label="السيارات">
-            <button class="chip is-active" type="button" data-filter="all" aria-pressed="true">
+            <button class="chip is-active" type="button" data-filter="all"
+                data-label="السيارات" aria-pressed="true">
                 الكل <span class="chip__n">10</span>
             </button>
-                            <button class="chip" type="button" data-filter="sedan" aria-pressed="false">
+                            <button class="chip" type="button" data-filter="sedan"
+                    data-label="سيدان" aria-pressed="false">
                     سيدان <span class="chip__n">6</span>
                 </button>
-                            <button class="chip" type="button" data-filter="suv" aria-pressed="false">
+                            <button class="chip" type="button" data-filter="suv"
+                    data-label="دفع رباعي" aria-pressed="false">
                     دفع رباعي <span class="chip__n">4</span>
                 </button>
                     </div>
 
-                    <div class="cars-grid">
-                <article class="car reveal" data-car data-tags="sedan toyota benzin">
+                            <div class="cars-grid">
+                <article class="car reveal" data-car data-tags="sedan toyota benzin" >
     <a class="car__media" href="car-toyota-camry-2022.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/toyota-camry-2022-3.jpeg" alt="Toyota camry 2022" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
@@ -156,7 +161,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="sedan toyota hybrid">
+<article class="car reveal" data-car data-tags="sedan toyota hybrid" >
     <a class="car__media" href="car-toyota-camry-2022-hybrid.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/toyota-camry-2022-hybrid-1.jpeg" alt="Toyota camry 2022 Hybrid" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
@@ -178,7 +183,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="sedan bmw benzin">
+<article class="car reveal" data-car data-tags="sedan bmw benzin" >
     <a class="car__media" href="car-bmw-g30-2021.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/bmw-g30-2021-3.jpeg" alt="Bmw G30 2021" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
@@ -200,7 +205,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="sedan bmw benzin">
+<article class="car reveal" data-car data-tags="sedan bmw benzin" >
     <a class="car__media" href="car-bmw-g30-2019.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/bmw-g30-2019-1.jpeg" alt="Bmw G30 2019" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
@@ -222,7 +227,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="suv kia benzin">
+<article class="car reveal" data-car data-tags="suv kia benzin" >
     <a class="car__media" href="car-kia-sorento-2020.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-sorento-2020-1.jpeg" alt="Kia Sorento 2020" loading="lazy" width="800" height="500">
                     <span class="car__badge">دفع رباعي</span>
@@ -244,7 +249,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="suv kia benzin">
+<article class="car reveal" data-car data-tags="suv kia benzin" >
     <a class="car__media" href="car-kia-sorento-2020-3.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-sorento-2020-3-6.webp" alt="Kia Sorento 2020" loading="lazy" width="800" height="500">
                     <span class="car__badge">دفع رباعي</span>
@@ -266,7 +271,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="suv kia benzin">
+<article class="car reveal" data-car data-tags="suv kia benzin" >
     <a class="car__media" href="car-kia-sorento-2020-2.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-sorento-2020-2-1.jpeg" alt="Kia Sorento 2020" loading="lazy" width="800" height="500">
                     <span class="car__badge">دفع رباعي</span>
@@ -288,7 +293,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="suv kia hybrid">
+<article class="car reveal" data-car data-tags="suv kia hybrid" >
     <a class="car__media" href="car-kia-sonento-2022-1-6-hybrid.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-sonento-2022-1-6-hybrid-1.jpeg" alt="Kia Sonento 2022 1.6 hybrid" loading="lazy" width="800" height="500">
                     <span class="car__badge">دفع رباعي</span>
@@ -310,7 +315,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="sedan kia benzin">
+<article class="car reveal" data-car data-tags="sedan kia benzin" >
     <a class="car__media" href="car-kia-cerato-2021-2.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-cerato-2021-2-1.jpeg" alt="Kia cerato 2021" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
@@ -332,7 +337,7 @@
                     </div>
     </div>
 </article>
-<article class="car reveal" data-car data-tags="sedan kia benzin">
+<article class="car reveal" data-car data-tags="sedan kia benzin" >
     <a class="car__media" href="car-kia-cerato-2021.html" tabindex="-1" aria-hidden="true">
         <img src="../../assets/img/cars/kia-cerato-2021-1.jpeg" alt="Kia cerato 2021" loading="lazy" width="800" height="500">
                     <span class="car__badge">سيدان</span>
