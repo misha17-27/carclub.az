@@ -348,12 +348,12 @@ function messages_save(array $list): bool
 
 const SECTIONS = [
     'overview'    => ['Обзор', '▤'],
-    'cars'        => ['Автомобили', '⛃'],
+    'cars'        => ['Автомобили', '◆'],
     'home'        => ['Главная страница', '★'],
     'pages'       => ['Тексты страниц', '¶'],
-    'images'      => ['Изображения', '❏'],
+    'images'      => ['Изображения', '▣'],
     'contacts'    => ['Контакты и соцсети', '☏'],
-    'seo'         => ['SEO', '☌'],
+    'seo'         => ['SEO', '◎'],
     'submissions' => ['Заявки с сайта', '✉'],
     'settings'    => ['Настройки', '⚙'],
     'users'       => ['Пользователи', '☺'],
@@ -505,7 +505,8 @@ textarea.tall{min-height:190px}
 
 .login{min-height:100vh;display:grid;place-items:center;background:#0d0d0f;padding:16px}
 .login .box{background:#fff;padding:34px 32px;border-radius:18px;width:370px;max-width:94vw;box-shadow:0 24px 70px rgba(0,0,0,.45)}
-.login .box img{max-height:46px;width:auto;margin:0 auto 18px}
+/* the logo is gold-on-black artwork — it needs a dark plate on a white card */
+.login .box img{max-height:44px;width:auto;margin:0 auto 18px;background:#0d0d0f;padding:11px 20px;border-radius:12px;box-sizing:content-box}
 .login h2{margin:0 0 3px;font-size:20px}
 .login .sub{color:#78716c;margin:0 0 16px;font-size:13.5px}
 .login .flash{margin-top:14px}
@@ -524,7 +525,10 @@ textarea.tall{min-height:190px}
   .bar{padding:13px 15px}
   .body{padding:17px 14px}
   .panel{padding:17px}
-  .panel>table,.tablewrap{display:block;overflow-x:auto}
+  .panel>table,.tablewrap{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tablewrap table{min-width:820px}
+  /* the thumbnail column is not worth its width on a phone */
+  .tablewrap td:first-child,.tablewrap th:first-child{display:none}
 }
 CSS;
 }
