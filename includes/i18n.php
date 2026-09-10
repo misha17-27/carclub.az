@@ -40,6 +40,10 @@ return [
     'form.error'    => ['en' => 'Please fill in your name and phone number.', 'az' => 'Zəhmət olmasa, ad və telefon nömrəsini doldurun.', 'ru' => 'Пожалуйста, укажите имя и телефон.', 'ar' => 'يرجى إدخال الاسم ورقم الهاتف.'],
     'form.error_mail' => ['en' => 'Please check the email address.', 'az' => 'Zəhmət olmasa, e-poçt ünvanını yoxlayın.', 'ru' => 'Проверьте адрес электронной почты.', 'ar' => 'يرجى التحقق من البريد الإلكتروني.'],
     'form.spam'     => ['en' => 'Request could not be sent. Please try again.', 'az' => 'Sorğu göndərilmədi. Yenidən cəhd edin.', 'ru' => 'Не удалось отправить заявку. Попробуйте ещё раз.', 'ar' => 'تعذّر إرسال الطلب. حاول مرة أخرى.'],
+    'form.wa_intro' => ['en' => 'Request from the website', 'az' => 'Sayt vasitəsilə sorğu', 'ru' => 'Заявка с сайта', 'ar' => 'طلب من الموقع'],
+    'form.car'      => ['en' => 'Car', 'az' => 'Avtomobil', 'ru' => 'Автомобиль', 'ar' => 'السيارة'],
+    'form.wa_sent'  => ['en' => 'Opening WhatsApp — send the message and we will reply right away.', 'az' => 'WhatsApp açılır — mesajı göndərin, dərhal cavab verəcəyik.', 'ru' => 'Открываем WhatsApp — отправьте сообщение, и мы сразу ответим.', 'ar' => 'يتم فتح واتساب — أرسل الرسالة وسنرد فوراً.'],
+    'form.send_wa'  => ['en' => 'Send via WhatsApp', 'az' => 'WhatsApp ilə göndər', 'ru' => 'Отправить в WhatsApp', 'ar' => 'إرسال عبر واتساب'],
 
     /* ---------------- spec labels ---------------- */
     'spec.year'    => ['en' => 'Year', 'az' => 'İl', 'ru' => 'Год', 'ar' => 'السنة'],

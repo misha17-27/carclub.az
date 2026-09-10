@@ -150,19 +150,34 @@ h4 {
    side that holds the image so the text keeps its contrast.
    The image itself comes from --texture, set inline by the template. */
 .section--texture {
+    position: relative;
     background-color: var(--ink);
+}
+
+/* the plate covers exactly the half of the section that holds the copy */
+.section--texture::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 50%;
     background-image:
         linear-gradient(rgba(10, 10, 11, .28), rgba(10, 10, 11, .28)),
         var(--texture, none);
-    /* the plate keeps its proportions and sits against the right edge —
-       it is not stretched across the section */
-    background-size: auto, contain;
-    background-position: center, right center;
+    background-size: auto, cover;
+    background-position: center, center;
     background-repeat: no-repeat, no-repeat;
 }
 
-[dir="rtl"] .section--texture {
-    background-position: center, left center;
+.section--texture>* {
+    position: relative;
+    z-index: 1;
+}
+
+[dir="rtl"] .section--texture::before {
+    right: auto;
+    left: 0;
 }
 
 .sr-only {
@@ -1812,11 +1827,12 @@ body.nav-open .drawer__panel {
         grid-template-columns: 1fr;
     }
 
-    /* one column: the plate covers the whole section instead of hugging an edge */
-    .section--texture,
-    [dir="rtl"] .section--texture {
-        background-size: auto, cover;
-        background-position: center, center;
+    /* one column: the plate covers the whole section instead of half of it */
+    .section--texture::before,
+    [dir="rtl"] .section--texture::before {
+        width: auto;
+        right: 0;
+        left: 0;
     }
 
     .footer__grid {

@@ -200,7 +200,35 @@
         if (e.key === 'ArrowRight') step(1);
     });
 
-    /* ---------- forms: light client-side validation ---------- */
+    /* ---------- forms: validation, then straight to WhatsApp ---------- */
+
+    function waMessage(f, labels) {
+        var get = function (n) {
+            var el = f.querySelector('[name="' + n + '"]');
+            return el ? el.value.trim() : '';
+        };
+        var lines = [labels.intro, ''];
+        [['name', 'name'], ['phone', 'phone'], ['email', 'email'], ['car', 'car']].forEach(function (p) {
+            var v = get(p[0]);
+            if (v) lines.push(labels[p[1]] + ': ' + v);
+        });
+        var msg = get('message');
+        if (msg) lines.push('', labels.message + ': ' + msg);
+        return lines.join('\n');
+    }
+
+    function formNotice(f, text) {
+        var box = f.parentNode.querySelector('.form-msg');
+        if (!box) {
+            box = doc.createElement('p');
+            box.className = 'form-msg';
+            box.setAttribute('role', 'status');
+            f.parentNode.insertBefore(box, f);
+        }
+        box.className = 'form-msg form-msg--ok';
+        box.textContent = text;
+    }
+
     doc.querySelectorAll('form[data-validate]').forEach(function (f) {
         f.addEventListener('submit', function (e) {
             var bad = null;
@@ -211,8 +239,35 @@
                 if (wrap) wrap.classList.toggle('has-error', !ok);
                 if (!ok && !bad) bad = el;
             });
-            if (bad) { e.preventDefault(); bad.focus(); }
+            if (bad) { e.preventDefault(); bad.focus(); return; }
+
+            var wa = f.getAttribute('data-wa');
+            if (!wa) return;                       // no number set — post as usual
+
+            e.preventDefault();
+
+            // keep a copy for the admin panel; sendBeacon survives leaving the page
+            try {
+                var fd = new FormData(f);
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon(f.action, fd);
+                } else {
+                    fetch(f.action, { method: 'POST', body: fd, keepalive: true }).catch(function () { });
+                }
+            } catch (_) { }
+
+            var labels = {};
+            try { labels = JSON.parse(f.getAttribute('data-wa-labels') || '{}'); } catch (_) { }
+            var url = 'https://api.whatsapp.com/send?phone=' + wa +
+                '&text=' + encodeURIComponent(waMessage(f, labels));
+
+            var win = window.open(url, '_blank', 'noopener');
+            if (!win) window.location.href = url;   // popup blocked — go there directly
+
+            formNotice(f, f.getAttribute('data-wa-sent') || '');
+            f.reset();
         });
+
         f.addEventListener('input', function (e) {
             var w = e.target.closest('.field');
             if (w) w.classList.remove('has-error');

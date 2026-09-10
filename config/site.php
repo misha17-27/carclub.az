@@ -52,6 +52,9 @@ return [
         'home_cars'      => 6,
         'search_visible' => true,
         'ga_id'          => '',
+        /* Send button opens WhatsApp with the filled-in request instead of
+           posting quietly; the request is still stored for the admin panel. */
+        'form_to_whatsapp' => true,
     ],
 
     /* Brand logos on the home page strip */

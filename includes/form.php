@@ -9,6 +9,18 @@
 $fid   = $FORM_ID ?? 'f';
 $fcar  = $FORM_CAR ?? '';
 $sent  = $GLOBALS['FORM_RESULT'] ?? null;   // [bool ok, string messageKey]
+
+/* When a WhatsApp number is set, the send button hands the filled-in request
+   straight to WhatsApp. Without JavaScript the form still posts normally. */
+$waNumber = cfg('settings.form_to_whatsapp', true) ? preg_replace('/\D/', '', (string) cfg('contacts.whatsapp', '')) : '';
+$waLabels = json_encode([
+    'intro'   => t('form.wa_intro') . ' — ' . cfg('settings.brand', 'Carclub'),
+    'name'    => t('form.name'),
+    'phone'   => t('form.phone'),
+    'email'   => t('form.email'),
+    'car'     => t('form.car'),
+    'message' => t('form.message'),
+], JSON_UNESCAPED_UNICODE);
 ?>
 <div class="form-card" id="request-<?= e($fid) ?>">
     <h2 class="form-card__title"><?= e($FORM_TITLE ?? t('form.title')) ?></h2>
@@ -19,7 +31,12 @@ $sent  = $GLOBALS['FORM_RESULT'] ?? null;   // [bool ok, string messageKey]
     <?php endif; ?>
 
     <?php if (!$sent || !$sent[0]): ?>
-        <form class="form" method="post" action="<?= e(current_url()) ?>#request-<?= e($fid) ?>" data-validate novalidate>
+        <form class="form" method="post" action="<?= e(current_url()) ?>#request-<?= e($fid) ?>" data-validate novalidate
+            <?php if ($waNumber !== ''): ?>
+            data-wa="<?= e($waNumber) ?>"
+            data-wa-labels="<?= e($waLabels) ?>"
+            data-wa-sent="<?= e(t('form.wa_sent')) ?>"
+            <?php endif; ?>>
             <input type="hidden" name="_csrf" value="<?= e(csrf_token()) ?>">
             <input type="hidden" name="page" value="<?= e(current_url()) ?>">
             <?php if ($fcar !== ''): ?>
@@ -51,7 +68,10 @@ $sent  = $GLOBALS['FORM_RESULT'] ?? null;   // [bool ok, string messageKey]
                 <label for="<?= e($fid) ?>-msg"><?= e(t('form.message')) ?></label>
                 <textarea id="<?= e($fid) ?>-msg" name="message" placeholder="<?= e(t('form.ph_msg')) ?>"><?= e($_POST['message'] ?? '') ?></textarea>
             </div>
-            <button class="btn btn--block btn--lg" type="submit"><?= e(t('form.send')) ?></button>
+            <button class="btn btn--block btn--lg" type="submit">
+                <?php if ($waNumber !== ''): ?><?= icon('whatsapp') ?><?php endif; ?>
+                <?= e($waNumber !== '' ? t('form.send_wa') : t('form.send')) ?>
+            </button>
             <p class="form__note"><?= e(t('form.note')) ?></p>
         </form>
     <?php endif; ?>

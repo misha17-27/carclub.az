@@ -135,6 +135,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             ov_set('settings.' . $k, trim((string) ($_POST[$k] ?? '')));
         }
         ov_set('settings.home_cars', max(1, min(24, (int) ($_POST['home_cars'] ?? 6))));
+        ov_set('settings.form_to_whatsapp', !empty($_POST['form_to_whatsapp']));
         foreach (['hero_image', 'about_image', 'about_bg', 'og_image'] as $k) {
             if ($up = admin_upload($k . '_file')) {
                 ov_set('settings.' . $k, 'img/' . $up);
@@ -949,6 +950,15 @@ elseif ($section === 'settings') {
             <label for="s_host">Адрес сайта (для canonical и Open Graph)</label>
             <input id="s_host" type="url" name="host" value="<?= e(val('settings.host')) ?>" placeholder="https://carclub.az">
             <p class="muted" style="margin:6px 0 0">Если оставить пустым — определяется автоматически из запроса.</p>
+
+            <div class="chkline">
+                <input id="s_wa" type="checkbox" name="form_to_whatsapp" value="1" <?= cfg('settings.form_to_whatsapp', true) ? 'checked' : '' ?>>
+                <label for="s_wa" style="margin:0">Отправлять заявки сразу в WhatsApp</label>
+            </div>
+            <p class="muted" style="margin:6px 0 0">
+                Кнопка в форме открывает WhatsApp с уже заполненным текстом заявки. Копия всё равно
+                попадает в раздел «Заявки с сайта». Если выключить — форма просто сохраняет заявку.
+            </p>
         </div>
 
         <?php foreach ([
