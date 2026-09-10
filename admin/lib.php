@@ -55,8 +55,26 @@ function val(string $path, string $default = ''): string
     return ($v === null || is_array($v)) ? $default : (string) $v;
 }
 
+/** Directory the panel is served from, always with a trailing slash. */
+function admin_base(): string
+{
+    $uri = parse_url($_SERVER['REQUEST_URI'] ?? '/admin/', PHP_URL_PATH) ?: '/admin/';
+    if (str_ends_with($uri, '.php')) {
+        $uri = dirname($uri);
+    }
+    return rtrim($uri, '/') . '/';
+}
+
+/**
+ * A relative Location is resolved against the *current* URL, so a request to
+ * /admin (no trailing slash) would send "index.php?section=login" to the site
+ * root and land on its 404. Always redirect to an absolute path.
+ */
 function redirect(string $to): void
 {
+    if (!preg_match('~^(https?:)?//|^/~', $to)) {
+        $to = admin_base() . $to;
+    }
     header('Location: ' . $to);
     exit;
 }

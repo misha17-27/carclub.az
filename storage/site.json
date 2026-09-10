@@ -6,7 +6,7 @@
         "whatsapp2": "994773809585",
         "email": "info@carclub.az",
         "tiktok": "https://vt.tiktok.com/ZSLGJaBq5/",
-        "instagram": "",
+        "instagram": "https://instagram.com/carclub.az",
         "facebook": "",
         "map_query": "baku"
     },
@@ -18,6 +18,16 @@
         "home_cars": 6,
         "hero_image": "img/site/rent-a-car-for-someone-else.rendition.medium.jpg",
         "about_image": "img/site/rentacar.jpg",
-        "og_image": "img/site/rentacar.jpg"
+        "og_image": "img/site/rentacar.jpg",
+        "form_to_whatsapp": false
+    },
+    "content": {
+        "ru": {
+            "home": {
+                "eyebrow": "Carclub · Аренда авто",
+                "title": "Аренда авто",
+                "title_accent": "в Баку"
+            }
+        }
     }
 }
