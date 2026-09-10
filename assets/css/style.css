@@ -296,12 +296,19 @@ h4 {
     box-shadow: none;
 }
 
+/* WhatsApp keeps the brand's black-and-gold palette instead of the messenger
+   green — the icon carries the recognition, the colour carries the tone. */
 .btn--wa {
-    --btn-bg: linear-gradient(180deg, #4ae98c 0%, #29c766 42%, #17a24d 100%);
-    --btn-bg-hover: linear-gradient(180deg, #62f19d 0%, #34d873 42%, #1cb257 100%);
-    --btn-fg: #042614;
-    --btn-bd: rgba(200, 255, 224, .3);
-    --btn-glow: rgba(37, 211, 102, .32);
+    --btn-bg: linear-gradient(180deg, #26261f 0%, #18181a 52%, #0e0e10 100%);
+    --btn-bg-hover: linear-gradient(180deg, #302f25 0%, #1f1f21 52%, #141416 100%);
+    --btn-fg: var(--gold-soft);
+    --btn-bd: rgba(212, 173, 0, .45);
+    --btn-glow: rgba(212, 173, 0, .26);
+}
+
+.btn--wa:hover {
+    --btn-fg: #f7dc86;
+    border-color: rgba(240, 201, 43, .75);
 }
 
 .btn--block {
@@ -1706,17 +1713,25 @@ body.nav-open .drawer__panel {
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: linear-gradient(180deg, #4ae98c 0%, #29c766 42%, #17a24d 100%);
-    color: #042614;
-    border: 1px solid rgba(200, 255, 224, .3);
+    background: linear-gradient(180deg, #26261f 0%, #18181a 52%, #0d0d0f 100%);
+    color: var(--gold-soft);
+    border: 1px solid rgba(212, 173, 0, .45);
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, .4),
-        0 10px 30px rgba(37, 211, 102, .38);
-    transition: transform .2s var(--ease);
+        inset 0 1px 0 rgba(255, 255, 255, .1),
+        0 10px 28px rgba(0, 0, 0, .55),
+        0 0 0 5px rgba(212, 173, 0, .05);
+    transition: transform .2s var(--ease), box-shadow .22s var(--ease),
+        border-color .22s var(--ease), color .22s var(--ease);
 }
 
 .fab:hover {
     transform: scale(1.08);
+    color: #f7dc86;
+    border-color: rgba(240, 201, 43, .8);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .16),
+        0 14px 34px rgba(0, 0, 0, .6),
+        0 0 22px rgba(212, 173, 0, .3);
 }
 
 .fab svg {
