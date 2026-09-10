@@ -11,8 +11,9 @@
     "gearbox": "avtomat",
     "seats": "4",
     "color": "silver",
-    "cover": 3,
+    "cover": 1,
     "images": [
+      "cars/toyota-camry-2022-cover.jpeg",
       "cars/toyota-camry-2022-1.jpeg",
       "cars/toyota-camry-2022-2.jpeg",
       "cars/toyota-camry-2022-3.jpeg",
@@ -39,6 +40,7 @@
     "color": "grey",
     "cover": 1,
     "images": [
+      "cars/toyota-camry-2022-hybrid-cover.jpeg",
       "cars/toyota-camry-2022-hybrid-1.jpeg",
       "cars/toyota-camry-2022-hybrid-2.jpeg",
       "cars/toyota-camry-2022-hybrid-3.jpeg",
@@ -64,8 +66,9 @@
     "gearbox": "avtomat",
     "seats": "4",
     "color": "grey",
-    "cover": 3,
+    "cover": 1,
     "images": [
+      "cars/bmw-g30-2021-cover.jpeg",
       "cars/bmw-g30-2021-1.jpeg",
       "cars/bmw-g30-2021-2.jpeg",
       "cars/bmw-g30-2021-3.jpeg",
@@ -95,6 +98,7 @@
     "color": "black",
     "cover": 1,
     "images": [
+      "cars/bmw-g30-2019-cover.webp",
       "cars/bmw-g30-2019-1.jpeg",
       "cars/bmw-g30-2019-2.jpeg",
       "cars/bmw-g30-2019-3.jpeg"
@@ -120,6 +124,7 @@
     "color": "burgundy",
     "cover": 1,
     "images": [
+      "cars/kia-sorento-2020-cover.jpeg",
       "cars/kia-sorento-2020-1.jpeg",
       "cars/kia-sorento-2020-2.jpeg",
       "cars/kia-sorento-2020-3.jpeg",
@@ -147,8 +152,9 @@
     "gearbox": "avtomat",
     "seats": "7",
     "color": "grey",
-    "cover": 6,
+    "cover": 1,
     "images": [
+      "cars/kia-sorento-2020-3-cover.webp",
       "cars/kia-sorento-2020-3-1.jpeg",
       "cars/kia-sorento-2020-3-2.jpeg",
       "cars/kia-sorento-2020-3-3.jpeg",
@@ -177,6 +183,7 @@
     "color": "white",
     "cover": 1,
     "images": [
+      "cars/kia-sorento-2020-2-cover.webp",
       "cars/kia-sorento-2020-2-1.jpeg",
       "cars/kia-sorento-2020-2-2.jpeg",
       "cars/kia-sorento-2020-2-3.jpeg",
@@ -204,7 +211,7 @@
     "color": "black",
     "cover": 1,
     "images": [
-      "cars/kia-sonento-2022-1-6-hybrid-5.jpeg",
+      "cars/kia-sonento-2022-1-6-hybrid-cover.jpeg",
       "cars/kia-sonento-2022-1-6-hybrid-1.jpeg",
       "cars/kia-sonento-2022-1-6-hybrid-2.jpeg",
       "cars/kia-sonento-2022-1-6-hybrid-3.jpeg",
@@ -231,6 +238,7 @@
     "color": "blue",
     "cover": 1,
     "images": [
+      "cars/kia-cerato-2021-2-cover.jpeg",
       "cars/kia-cerato-2021-2-1.jpeg",
       "cars/kia-cerato-2021-2-2.jpeg",
       "cars/kia-cerato-2021-2-3.jpeg",
@@ -257,6 +265,7 @@
     "color": "white",
     "cover": 1,
     "images": [
+      "cars/kia-cerato-2021-cover.jpeg",
       "cars/kia-cerato-2021-1.jpeg",
       "cars/kia-cerato-2021-2.jpeg",
       "cars/kia-cerato-2021-3.jpeg"
