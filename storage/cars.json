@@ -201,8 +201,8 @@
     "fuel": "hybrid",
     "gearbox": "avtomat",
     "seats": "6",
-    "color": "white",
-    "cover": 1,
+    "color": "",
+    "cover": 2,
     "images": [
       "cars/kia-sonento-2022-1-6-hybrid-1.jpeg",
       "cars/kia-sonento-2022-1-6-hybrid-2.jpeg",
