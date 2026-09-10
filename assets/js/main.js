@@ -57,6 +57,9 @@
     if (chips.length) {
         var cards = doc.querySelectorAll('[data-car]');
         var empty = doc.getElementById('cars-empty');
+        var grid = doc.querySelector('.cars-grid');
+        var current = 'all';
+
         var apply = function (val) {
             var shown = 0;
             cards.forEach(function (c) {
@@ -67,21 +70,39 @@
             });
             if (empty) empty.hidden = shown > 0;
         };
-        chips.forEach(function (ch) {
-            ch.addEventListener('click', function () {
-                chips.forEach(function (x) { x.classList.remove('is-active'); });
-                ch.classList.add('is-active');
-                var v = ch.getAttribute('data-filter');
-                apply(v);
-                var u = new URL(location.href);
-                if (v === 'all') { u.searchParams.delete('f'); } else { u.searchParams.set('f', v); }
-                history.replaceState(null, '', u);
+
+        var select = function (ch, animate) {
+            var v = ch.getAttribute('data-filter');
+            if (v === current) return;
+            current = v;
+            chips.forEach(function (x) {
+                var on = x === ch;
+                x.classList.toggle('is-active', on);
+                x.setAttribute('aria-pressed', on ? 'true' : 'false');
             });
+            if (grid && animate) {
+                grid.classList.add('is-swapping');
+                setTimeout(function () {
+                    apply(v);
+                    grid.classList.remove('is-swapping');
+                }, 160);
+            } else {
+                apply(v);
+            }
+            var u = new URL(location.href);
+            if (v === 'all') { u.searchParams.delete('f'); } else { u.searchParams.set('f', v); }
+            history.replaceState(null, '', u);
+        };
+
+        chips.forEach(function (ch) {
+            ch.addEventListener('click', function () { select(ch, true); });
         });
+
+        // ?f=suv opens the page already filtered
         var pre = new URL(location.href).searchParams.get('f');
         if (pre) {
             var target = doc.querySelector('[data-filter="' + CSS.escape(pre) + '"]');
-            if (target) target.click();
+            if (target) select(target, false);
         }
     }
 

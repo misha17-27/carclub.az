@@ -8,6 +8,12 @@
     --gold-soft: #f0c92b;
     --gold-dim: rgba(212, 173, 0, .16);
 
+    /* Brushed-gold fill for buttons: a light top edge falling to a darker
+       bottom reads as metal, where one flat colour reads as a plastic chip. */
+    --gold-grad: linear-gradient(180deg, #f7dc86 0%, #e2bd4c 26%, #c99f28 62%, #ab8410 100%);
+    --gold-grad-hi: linear-gradient(180deg, #fdeaa8 0%, #edcb62 26%, #d7ac33 62%, #bb9117 100%);
+    --gold-ink: #241b04;
+
     --ink: #0a0a0b;
     --ink-2: #121214;
     --ink-3: #1a1a1d;
@@ -223,31 +229,47 @@ h4 {
 
 /* ---------- buttons ---------- */
 .btn {
-    --btn-bg: var(--gold);
-    --btn-fg: #000;
+    --btn-bg: var(--gold-grad);
+    --btn-bg-hover: var(--gold-grad-hi);
+    --btn-fg: var(--gold-ink);
+    --btn-bd: rgba(255, 240, 190, .34);
+    --btn-glow: rgba(198, 157, 38, .34);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
     padding: 13px 26px;
+    border: 1px solid var(--btn-bd);
     border-radius: 100px;
     background: var(--btn-bg);
     color: var(--btn-fg);
     font-size: 14px;
     font-weight: 700;
-    letter-spacing: .04em;
+    letter-spacing: .05em;
     text-transform: uppercase;
     white-space: nowrap;
-    transition: transform .18s var(--ease), box-shadow .18s var(--ease), background .18s var(--ease);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .45),
+        inset 0 -1px 0 rgba(0, 0, 0, .16),
+        0 3px 12px rgba(0, 0, 0, .34);
+    transition: transform .18s var(--ease), box-shadow .18s var(--ease),
+        background .22s var(--ease), border-color .18s var(--ease), color .18s var(--ease);
 }
 
 .btn:hover {
+    background: var(--btn-bg-hover);
     transform: translateY(-2px);
-    box-shadow: 0 10px 26px rgba(212, 173, 0, .28);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .55),
+        inset 0 -1px 0 rgba(0, 0, 0, .16),
+        0 10px 26px var(--btn-glow);
 }
 
 .btn:active {
     transform: translateY(0);
+    box-shadow:
+        inset 0 2px 5px rgba(0, 0, 0, .28),
+        0 2px 8px rgba(0, 0, 0, .3);
 }
 
 .btn svg {
@@ -258,24 +280,28 @@ h4 {
 
 .btn--ghost {
     --btn-bg: transparent;
+    --btn-bg-hover: rgba(255, 255, 255, .06);
     --btn-fg: var(--fg);
-    border: 1px solid var(--line-2);
+    --btn-bd: var(--line-2);
+    box-shadow: none;
 }
 
 .btn--ghost:hover {
-    --btn-bg: rgba(255, 255, 255, .06);
-    border-color: var(--gold);
-    color: var(--gold);
+    border-color: rgba(212, 173, 0, .6);
+    color: var(--gold-soft);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+}
+
+.btn--ghost:active {
     box-shadow: none;
 }
 
 .btn--wa {
-    --btn-bg: #25d366;
-    --btn-fg: #04220f;
-}
-
-.btn--wa:hover {
-    box-shadow: 0 10px 26px rgba(37, 211, 102, .3);
+    --btn-bg: linear-gradient(180deg, #4ae98c 0%, #29c766 42%, #17a24d 100%);
+    --btn-bg-hover: linear-gradient(180deg, #62f19d 0%, #34d873 42%, #1cb257 100%);
+    --btn-fg: #042614;
+    --btn-bd: rgba(200, 255, 224, .3);
+    --btn-glow: rgba(37, 211, 102, .32);
 }
 
 .btn--block {
@@ -592,9 +618,10 @@ body.nav-open .drawer__panel {
 }
 
 .drawer__langs a.is-active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: #000;
+    background: var(--gold-grad);
+    border-color: rgba(255, 240, 190, .38);
+    color: var(--gold-ink);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .42);
 }
 
 .drawer__contacts {
@@ -1079,14 +1106,31 @@ body.nav-open .drawer__panel {
 }
 
 .chip.is-active {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: #000;
+    background: var(--gold-grad);
+    border-color: rgba(255, 240, 190, .38);
+    color: var(--gold-ink);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .45),
+        0 4px 14px rgba(0, 0, 0, .32);
 }
 
 .chip__n {
     opacity: .6;
     font-size: 12px;
+    font-weight: 700;
+}
+
+.chip.is-active .chip__n {
+    opacity: .72;
+}
+
+/* brief dip while the grid re-filters, so the change is visible */
+.cars-grid {
+    transition: opacity .16s var(--ease);
+}
+
+.cars-grid.is-swapping {
+    opacity: .25;
 }
 
 .empty {
@@ -1662,9 +1706,12 @@ body.nav-open .drawer__panel {
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #25d366;
-    color: #04220f;
-    box-shadow: 0 10px 30px rgba(37, 211, 102, .4);
+    background: linear-gradient(180deg, #4ae98c 0%, #29c766 42%, #17a24d 100%);
+    color: #042614;
+    border: 1px solid rgba(200, 255, 224, .3);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .4),
+        0 10px 30px rgba(37, 211, 102, .38);
     transition: transform .2s var(--ease);
 }
 
