@@ -9,14 +9,17 @@ plain web server.
     php -S 127.0.0.1:8031 router.php     # in one terminal
     python tools/build-static.py         # in another
 
-Layout produced:
-    html/index.html            -> redirects to en/
-    html/<lang>/index.html     home
-    html/<lang>/cars.html      listing
-    html/<lang>/about.html
-    html/<lang>/contact.html
-    html/<lang>/404.html
-    html/<lang>/car-<slug>.html
+Layout mirrors the live site: the default language sits at the root, the
+others live in their own folder.
+
+    html/index.html            home, default language (English)
+    html/cars.html             listing
+    html/about.html
+    html/contact.html
+    html/404.html
+    html/car-<slug>.html
+    html/az/index.html         the same set per extra language
+    html/ru/…  html/ar/…
 """
 
 import json
@@ -62,13 +65,16 @@ def out_name(page, slug=''):
 
 
 def rewrite(html, lang, cars):
-    """Turn absolute site URLs into relative paths inside html/<lang>/."""
+    """Turn absolute site URLs into paths relative to this page's folder."""
 
-    # assets: /assets/x.css?v=1 -> ../../assets/x.css?v=1
+    default = 'en'
+    up = '../' if lang != default else ''      # extra languages sit one level deeper
+
+    # assets: /assets/x.css?v=1 -> ../assets/x.css?v=1
     # the ?v= is kept on purpose: without it a browser happily serves a stale
     # stylesheet from cache after the snapshot is rebuilt
     html = re.sub(r'(["\'(])/assets/([^"\'?)]+)(\?[^"\')]*)?',
-                  lambda m: m.group(1) + '../../assets/' + m.group(2) + (m.group(3) or ''), html)
+                  lambda m: m.group(1) + up + '../assets/' + m.group(2) + (m.group(3) or ''), html)
 
     # absolute URLs the server printed for canonical/og/hreflang: keep them,
     # they describe the live site, not this snapshot.
@@ -77,7 +83,12 @@ def rewrite(html, lang, cars):
     pairs = []
     for lg, prefix in LANGS.items():
         base = '/' + (prefix + '/' if prefix else '')
-        rel = '' if lg == lang else '../' + lg + '/'
+        if lg == lang:
+            rel = ''
+        elif lg == default:
+            rel = up                    # back up to the root
+        else:
+            rel = up + lg + '/'
         for car in cars:
             pairs.append((base + car + '/', rel + out_name('car', car)))
         for page in ('cars', 'about', 'contact'):
@@ -112,7 +123,8 @@ def main():
 
     total = 0
     for lang in LANGS:
-        d = os.path.join(OUT, lang)
+        # default language at the root, the rest in their own folder
+        d = OUT if LANGS[lang] == '' else os.path.join(OUT, lang)
         os.makedirs(d, exist_ok=True)
         jobs = [(p, '') for p in PAGES] + [('car', s) for s in cars]
         for page, slug in jobs:
@@ -124,22 +136,9 @@ def main():
         html = rewrite(fetch('/' + (LANGS[lang] + '/' if LANGS[lang] else '') + 'page-not-found/'), lang, cars)
         open(os.path.join(d, '404.html'), 'w', encoding='utf-8').write(html)
         total += 1
-        print('%-3s %2d pages' % (lang, len(jobs) + 1))
+        print('%-3s %2d pages -> %s' % (lang, len(jobs) + 1, os.path.relpath(d, ROOT).replace('\\', '/') + '/'))
 
-    with open(os.path.join(OUT, 'index.html'), 'w', encoding='utf-8') as f:
-        f.write('<!DOCTYPE html>\n<html lang="en">\n<head>\n'
-                '<meta charset="UTF-8">\n'
-                '<meta http-equiv="refresh" content="0; url=en/index.html">\n'
-                '<title>Carclub.az</title>\n</head>\n<body>\n'
-                '<p>Redirecting to <a href="en/index.html">the English version</a>.</p>\n'
-                '<ul>\n'
-                '<li><a href="en/index.html">English</a></li>\n'
-                '<li><a href="az/index.html">Azərbaycan</a></li>\n'
-                '<li><a href="ru/index.html">Русский</a></li>\n'
-                '<li><a href="ar/index.html">العربية</a></li>\n'
-                '</ul>\n</body>\n</html>\n')
-
-    print('\nWrote %d files to %s' % (total + 1, OUT))
+    print('\nWrote %d files to %s' % (total, OUT))
 
 
 if __name__ == '__main__':
