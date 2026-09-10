@@ -25,7 +25,9 @@ require __DIR__ . '/../includes/header.php';
     </div>
 </section>
 
-<section class="section">
+<?php $aboutBg = cfg('settings.about_bg', ''); ?>
+<section class="section<?= $aboutBg !== '' ? ' section--texture' : '' ?>"
+    <?= $aboutBg !== '' ? 'style="--texture:url(\'' . e(img(ltrim($aboutBg, 'img/'))) . '\')"' : '' ?>>
     <div class="wrap about">
         <div class="about__media reveal">
             <img src="<?= e(img(ltrim(cfg('settings.about_image', 'img/site/rentacar.jpg'), 'img/'))) ?>"

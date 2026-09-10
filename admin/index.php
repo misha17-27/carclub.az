@@ -135,7 +135,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             ov_set('settings.' . $k, trim((string) ($_POST[$k] ?? '')));
         }
         ov_set('settings.home_cars', max(1, min(24, (int) ($_POST['home_cars'] ?? 6))));
-        foreach (['hero_image', 'about_image', 'og_image'] as $k) {
+        foreach (['hero_image', 'about_image', 'about_bg', 'og_image'] as $k) {
             if ($up = admin_upload($k . '_file')) {
                 ov_set('settings.' . $k, 'img/' . $up);
             } elseif (($v = trim((string) ($_POST[$k] ?? ''))) !== '') {
@@ -954,6 +954,7 @@ elseif ($section === 'settings') {
         <?php foreach ([
             'hero_image'  => ['Фон первого экрана', 'Широкое фото, желательно от 1600 px.'],
             'about_image' => ['Фото в блоке «О нас»', 'Соотношение примерно 4:3.'],
+            'about_bg'    => ['Фон блока «О нас»', 'Тёмная текстура за текстом. Оставьте поле пустым, чтобы вернуть однотонный фон.'],
             'og_image'    => ['Картинка для соцсетей (Open Graph)', 'Показывается при отправке ссылки в мессенджеры.'],
         ] as $key => [$label, $hint]): $cur = val('settings.' . $key); ?>
             <div class="panel">

@@ -48,6 +48,7 @@ return [
         'og_image'       => 'img/site/rentacar.jpg',
         'hero_image'     => 'img/site/rent-a-car-for-someone-else.rendition.medium.jpg',
         'about_image'    => 'img/site/rentacar.jpg',
+        'about_bg'       => 'img/site/rentcar.jpg',
         'home_cars'      => 6,
         'search_visible' => true,
         'ga_id'          => '',

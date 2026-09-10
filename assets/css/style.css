@@ -140,6 +140,25 @@ h4 {
     background: var(--ink-2);
 }
 
+/* Textured section: the honeycomb plate sits behind the copy, darkened on the
+   side that holds the image so the text keeps its contrast.
+   The image itself comes from --texture, set inline by the template. */
+.section--texture {
+    background-color: var(--ink);
+    background-image:
+        linear-gradient(90deg, var(--ink) 0%, rgba(10, 10, 11, .8) 32%, rgba(10, 10, 11, .25) 100%),
+        var(--texture, none);
+    background-size: auto, cover;
+    background-position: center, center;
+    background-repeat: no-repeat, no-repeat;
+}
+
+[dir="rtl"] .section--texture {
+    background-image:
+        linear-gradient(270deg, var(--ink) 0%, rgba(10, 10, 11, .8) 32%, rgba(10, 10, 11, .25) 100%),
+        var(--texture, none);
+}
+
 .sr-only {
     position: absolute;
     width: 1px;
@@ -1729,6 +1748,14 @@ body.nav-open .drawer__panel {
     .contact-grid,
     .about {
         grid-template-columns: 1fr;
+    }
+
+    /* single column — darken evenly instead of sideways */
+    .section--texture,
+    [dir="rtl"] .section--texture {
+        background-image:
+            linear-gradient(rgba(10, 10, 11, .8), rgba(10, 10, 11, .62)),
+            var(--texture, none);
     }
 
     .footer__grid {
