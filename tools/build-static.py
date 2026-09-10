@@ -64,8 +64,11 @@ def out_name(page, slug=''):
 def rewrite(html, lang, cars):
     """Turn absolute site URLs into relative paths inside html/<lang>/."""
 
-    # assets: /assets/x.css?v=1 -> ../../assets/x.css
-    html = re.sub(r'(["\'(])/assets/([^"\'?)]+)(\?[^"\')]*)?', r'\1../../assets/\2', html)
+    # assets: /assets/x.css?v=1 -> ../../assets/x.css?v=1
+    # the ?v= is kept on purpose: without it a browser happily serves a stale
+    # stylesheet from cache after the snapshot is rebuilt
+    html = re.sub(r'(["\'(])/assets/([^"\'?)]+)(\?[^"\')]*)?',
+                  lambda m: m.group(1) + '../../assets/' + m.group(2) + (m.group(3) or ''), html)
 
     # absolute URLs the server printed for canonical/og/hreflang: keep them,
     # they describe the live site, not this snapshot.

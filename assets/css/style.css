@@ -107,6 +107,12 @@ ol {
     padding: 0;
 }
 
+/* Author styles beat the browser's [hidden] rule, so any element we give a
+   display to (.car is a flex column) would stay visible when hidden. */
+[hidden] {
+    display: none !important;
+}
+
 h1,
 h2,
 h3,
