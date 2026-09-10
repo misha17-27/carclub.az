@@ -51,26 +51,16 @@ require __DIR__ . '/../includes/header.php';
     <div class="wrap detail">
         <div>
             <?php if ($gallery): ?>
-                <div id="gallery">
-                    <div class="gallery__main">
-                        <img src="<?= e(img(ltrim($gallery[0], 'img/'))) ?>" alt="<?= e($title) ?>" width="1200" height="750">
-                        <?php if (count($gallery) > 1): ?>
-                            <button class="gallery__nav gallery__nav--prev" type="button" aria-label="&#8592;"><?= icon('chevron-left') ?></button>
-                            <button class="gallery__nav gallery__nav--next" type="button" aria-label="&#8594;"><?= icon('chevron-right') ?></button>
-                            <span class="gallery__count">1 / <?= count($gallery) ?></span>
-                        <?php endif; ?>
-                    </div>
-                    <?php if (count($gallery) > 1): ?>
-                        <div class="gallery__thumbs">
-                            <?php foreach ($gallery as $i => $g): ?>
-                                <button class="gallery__thumb<?= $i === 0 ? ' is-active' : '' ?>" type="button" data-i="<?= $i ?>"
-                                    aria-label="<?= e($title . ' — ' . ($i + 1)) ?>">
-                                    <img src="<?= e(img(ltrim($g, 'img/'))) ?>" data-full="<?= e(img(ltrim($g, 'img/'))) ?>"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
+                <div class="gallery" id="gallery">
+                    <?php foreach ($gallery as $i => $g): ?>
+                        <button class="gallery__shot" type="button" data-i="<?= $i ?>"
+                            aria-label="<?= e($title . ' — ' . ($i + 1) . ' / ' . count($gallery)) ?>">
+                            <img src="<?= e(img(ltrim($g, 'img/'))) ?>" data-full="<?= e(img(ltrim($g, 'img/'))) ?>"
+                                alt="<?= e($title . ' — ' . ($i + 1)) ?>" width="1200" height="750"
+                                <?= $i === 0 ? 'fetchpriority="high"' : 'loading="lazy"' ?>>
+                            <span class="gallery__badge"><?= $i + 1 ?> / <?= count($gallery) ?></span>
+                        </button>
+                    <?php endforeach; ?>
                 </div>
             <?php endif; ?>
         </div>
@@ -138,6 +128,7 @@ require __DIR__ . '/../includes/header.php';
     <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="&#8592;"><?= icon('chevron-left') ?></button>
     <img src="" alt="<?= e($title) ?>">
     <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="&#8594;"><?= icon('chevron-right') ?></button>
+    <span class="lightbox__count" aria-hidden="true">1 / <?= count($gallery) ?></span>
 </div>
 
 <?php require __DIR__ . '/../includes/footer.php'; ?>

@@ -26,7 +26,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css?v=1789042436">
+    <link rel="stylesheet" href="../../assets/css/style.css?v=1789045999">
 
     <script type="application/ld+json">
         {"@context":"https://schema.org","@type":"AutoRental","name":"Carclub","url":"http://127.0.0.1:8031/ar/","image":"http://127.0.0.1:8031/assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326","logo":"http://127.0.0.1:8031/assets/img/logo.png?v=1789031342","telephone":["+994 55 608 08 06","+994 77 380 95 85"],"email":"info@carclub.az","address":{"@type":"PostalAddress","addressLocality":"Baku","addressCountry":"AZ"},"areaServed":"Baku, Azerbaijan"}    </script>
@@ -122,55 +122,63 @@
 <section class="section">
     <div class="wrap detail">
         <div>
-                            <div id="gallery">
-                    <div class="gallery__main">
-                        <img src="../../assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326" alt="Kia Sorento 2020" width="1200" height="750">
-                                                    <button class="gallery__nav gallery__nav--prev" type="button" aria-label="&#8592;"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6"/></svg></button>
-                            <button class="gallery__nav gallery__nav--next" type="button" aria-label="&#8594;"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg></button>
-                            <span class="gallery__count">1 / 8</span>
-                                            </div>
-                                            <div class="gallery__thumbs">
-                                                            <button class="gallery__thumb is-active" type="button" data-i="0"
-                                    aria-label="Kia Sorento 2020 — 1">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326" data-full="../../assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="1"
-                                    aria-label="Kia Sorento 2020 — 2">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-1.jpeg?v=1789031040" data-full="../../assets/img/cars/kia-sorento-2020-1.jpeg?v=1789031040"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="2"
-                                    aria-label="Kia Sorento 2020 — 3">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-2.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-2.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="3"
-                                    aria-label="Kia Sorento 2020 — 4">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-3.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-3.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="4"
-                                    aria-label="Kia Sorento 2020 — 5">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-4.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-4.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="5"
-                                    aria-label="Kia Sorento 2020 — 6">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-5.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-5.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="6"
-                                    aria-label="Kia Sorento 2020 — 7">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-6.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-6.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                            <button class="gallery__thumb" type="button" data-i="7"
-                                    aria-label="Kia Sorento 2020 — 8">
-                                    <img src="../../assets/img/cars/kia-sorento-2020-7.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-7.jpeg?v=1789031039"
-                                        alt="" loading="lazy" width="240" height="180">
-                                </button>
-                                                    </div>
+                            <div class="gallery" id="gallery">
+                                            <button class="gallery__shot" type="button" data-i="0"
+                            aria-label="Kia Sorento 2020 — 1 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326" data-full="../../assets/img/cars/kia-sorento-2020-cover.jpeg?v=1789045326"
+                                alt="Kia Sorento 2020 — 1" width="1200" height="750"
+                                fetchpriority="high">
+                            <span class="gallery__badge">1 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="1"
+                            aria-label="Kia Sorento 2020 — 2 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-1.jpeg?v=1789031040" data-full="../../assets/img/cars/kia-sorento-2020-1.jpeg?v=1789031040"
+                                alt="Kia Sorento 2020 — 2" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">2 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="2"
+                            aria-label="Kia Sorento 2020 — 3 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-2.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-2.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 3" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">3 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="3"
+                            aria-label="Kia Sorento 2020 — 4 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-3.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-3.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 4" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">4 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="4"
+                            aria-label="Kia Sorento 2020 — 5 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-4.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-4.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 5" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">5 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="5"
+                            aria-label="Kia Sorento 2020 — 6 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-5.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-5.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 6" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">6 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="6"
+                            aria-label="Kia Sorento 2020 — 7 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-6.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-6.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 7" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">7 / 8</span>
+                        </button>
+                                            <button class="gallery__shot" type="button" data-i="7"
+                            aria-label="Kia Sorento 2020 — 8 / 8">
+                            <img src="../../assets/img/cars/kia-sorento-2020-7.jpeg?v=1789031039" data-full="../../assets/img/cars/kia-sorento-2020-7.jpeg?v=1789031039"
+                                alt="Kia Sorento 2020 — 8" width="1200" height="750"
+                                loading="lazy">
+                            <span class="gallery__badge">8 / 8</span>
+                        </button>
                                     </div>
                     </div>
 
@@ -232,7 +240,7 @@
             data-wa-labels="{&quot;intro&quot;:&quot;طلب من الموقع — Carclub&quot;,&quot;name&quot;:&quot;الاسم&quot;,&quot;phone&quot;:&quot;الهاتف&quot;,&quot;email&quot;:&quot;البريد الإلكتروني&quot;,&quot;car&quot;:&quot;السيارة&quot;,&quot;message&quot;:&quot;رسالة&quot;}"
             data-wa-sent="يتم فتح واتساب — أرسل الرسالة وسنرد فوراً."
             >
-            <input type="hidden" name="_csrf" value="6dc3c202eb9f069c2e70fa0a3296c72f">
+            <input type="hidden" name="_csrf" value="faadff2e27dcfa0b826154c91542a00b">
             <input type="hidden" name="page" value="/ar/kia-sorento-2020/">
                             <input type="hidden" name="car" value="Kia Sorento 2020">
                         <div class="sr-only" aria-hidden="true">
@@ -351,6 +359,7 @@
     <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="&#8592;"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6"/></svg></button>
     <img src="" alt="Kia Sorento 2022 1.6 Hybrid">
     <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="&#8594;"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6"/></svg></button>
+    <span class="lightbox__count" aria-hidden="true">1 / 8</span>
 </div>
 
 </main>
@@ -394,7 +403,7 @@
 
     <a class="fab" href="https://api.whatsapp.com/send?phone=994556080806" target="_blank" rel="noopener" aria-label="راسلنا على واتساب"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.46-2.4-1.48-.88-.79-1.48-1.77-1.66-2.06-.17-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.57-.35zM12.05 21.8h-.02a9.8 9.8 0 0 1-4.99-1.37l-.36-.21-3.71.97.99-3.62-.23-.37a9.8 9.8 0 0 1-1.5-5.23c0-5.41 4.4-9.81 9.83-9.81 2.62 0 5.09 1.02 6.94 2.88a9.75 9.75 0 0 1 2.88 6.94c0 5.42-4.41 9.82-9.83 9.82zM20.5 3.49A11.75 11.75 0 0 0 12.05 0C5.55 0 .26 5.29.26 11.79c0 2.08.54 4.11 1.58 5.9L.16 24l6.45-1.69a11.76 11.76 0 0 0 5.44 1.38h.01c6.5 0 11.79-5.29 11.79-11.79 0-3.15-1.23-6.11-3.45-8.34z"/></svg></a>
 
-<script src="../../assets/js/main.js?v=1789041714" defer></script>
+<script src="../../assets/js/main.js?v=1789045892" defer></script>
 </body>
 
 </html>

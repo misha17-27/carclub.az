@@ -121,31 +121,26 @@
         }
     }
 
-    /* ---------- gallery + lightbox (car page) ---------- */
+    /* ---------- gallery: a column of photos, lightbox on click ---------- */
     var gal = doc.getElementById('gallery');
     var lbEl = doc.getElementById('lightbox');
     var shots = [], idx = 0;
 
-    function paint() {
-        if (!gal) return;
-        var img = gal.querySelector('.gallery__main img');
-        img.src = shots[idx];
-        var c = gal.querySelector('.gallery__count');
+    function lbPaint() {
+        if (!lbEl || !shots.length) return;
+        lbEl.querySelector('img').src = shots[idx];
+        var c = lbEl.querySelector('.lightbox__count');
         if (c) c.textContent = (idx + 1) + ' / ' + shots.length;
-        gal.querySelectorAll('.gallery__thumb').forEach(function (t, i) {
-            t.classList.toggle('is-active', i === idx);
-            t.setAttribute('aria-current', i === idx ? 'true' : 'false');
-        });
     }
     function step(d) {
         if (!shots.length) return;
         idx = (idx + d + shots.length) % shots.length;
-        paint();
-        if (lbEl && lbEl.classList.contains('is-open')) lbEl.querySelector('img').src = shots[idx];
+        lbPaint();
     }
-    function openLightbox() {
+    function openLightbox(i) {
         if (!lbEl || !shots.length) return;
-        lbEl.querySelector('img').src = shots[idx];
+        idx = i || 0;
+        lbPaint();
         lbEl.classList.add('is-open');
         body.style.overflow = 'hidden';
     }
@@ -156,32 +151,13 @@
     }
 
     if (gal) {
-        shots = Array.prototype.map.call(gal.querySelectorAll('.gallery__thumb img'), function (i) {
+        shots = Array.prototype.map.call(gal.querySelectorAll('.gallery__shot img'), function (i) {
             return i.getAttribute('data-full') || i.src;
         });
-        if (!shots.length) {
-            var only = gal.querySelector('.gallery__main img');
-            if (only) shots = [only.src];
-        }
         gal.addEventListener('click', function (e) {
-            var t = e.target.closest('.gallery__thumb');
-            if (t) { idx = +t.getAttribute('data-i'); paint(); return; }
-            if (e.target.closest('.gallery__nav--prev')) { step(-1); return; }
-            if (e.target.closest('.gallery__nav--next')) { step(1); return; }
-            if (e.target.closest('.gallery__main')) { openLightbox(); }
+            var shot = e.target.closest('.gallery__shot');
+            if (shot) openLightbox(+shot.getAttribute('data-i'));
         });
-        paint();
-
-        /* swipe */
-        var x0 = null;
-        var main = gal.querySelector('.gallery__main');
-        main.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
-        main.addEventListener('touchend', function (e) {
-            if (x0 === null) return;
-            var dx = e.changedTouches[0].clientX - x0;
-            if (Math.abs(dx) > 45) { step(dx < 0 ? 1 : -1); }
-            x0 = null;
-        }, { passive: true });
     }
 
     if (lbEl) {
@@ -190,12 +166,20 @@
             if (e.target.closest('.lightbox__nav--prev')) { step(-1); return; }
             if (e.target.closest('.lightbox__nav--next')) { step(1); }
         });
+
+        /* swipe through the lightbox on touch */
+        var x0 = null;
+        lbEl.addEventListener('touchstart', function (e) { x0 = e.changedTouches[0].clientX; }, { passive: true });
+        lbEl.addEventListener('touchend', function (e) {
+            if (x0 === null) return;
+            var dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 45) step(dx < 0 ? 1 : -1);
+            x0 = null;
+        }, { passive: true });
     }
 
     doc.addEventListener('keydown', function (e) {
-        if (!shots.length) return;
-        var lbOpen = lbEl && lbEl.classList.contains('is-open');
-        if (!lbOpen && !gal) return;
+        if (!shots.length || !lbEl || !lbEl.classList.contains('is-open')) return;
         if (e.key === 'ArrowLeft') step(-1);
         if (e.key === 'ArrowRight') step(1);
     });
