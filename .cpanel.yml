@@ -6,6 +6,7 @@ deployment:
     - /bin/cp -f router.php /home/carclub/public_html/
     - /bin/cp -f .htaccess /home/carclub/public_html/
     - /bin/cp -f README.md /home/carclub/public_html/
+    - /bin/cp -f health.php /home/carclub/public_html/
     - /bin/cp -Rf config /home/carclub/public_html/
     - /bin/cp -Rf includes /home/carclub/public_html/
     - /bin/cp -Rf pages /home/carclub/public_html/

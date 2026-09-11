@@ -4,6 +4,8 @@
  *   php -S 127.0.0.1:8031 router.php
  * Serves existing files directly, everything else goes through index.php.
  */
+require_once __DIR__ . '/includes/compat.php';
+
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $file = __DIR__ . $path;
 

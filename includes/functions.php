@@ -3,6 +3,8 @@
  * Shared helpers for the public site and the admin panel.
  */
 
+require_once __DIR__ . '/compat.php';
+
 define('ROOT', dirname(__DIR__));
 define('STORAGE', ROOT . '/storage');
 
