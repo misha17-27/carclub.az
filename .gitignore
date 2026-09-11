@@ -1,7 +1,9 @@
-storage/messages.json
-storage/login-throttle.json
-storage/admin-users.json
 *.log
 .DS_Store
 Thumbs.db
 storage/admin-password.txt
+storage/admin-users.json
+storage/form-throttle.json
+storage/login-throttle.json
+storage/messages.json
+storage/secret.txt

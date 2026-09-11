@@ -38,6 +38,7 @@ $waLabels = json_encode([
             data-wa-sent="<?= e(t('form.wa_sent')) ?>"
             <?php endif; ?>>
             <input type="hidden" name="_csrf" value="<?= e(csrf_token()) ?>">
+            <input type="hidden" name="ts" value="<?= e(form_stamp()) ?>">
             <input type="hidden" name="page" value="<?= e(current_url()) ?>">
             <?php if ($fcar !== ''): ?>
                 <input type="hidden" name="car" value="<?= e($fcar) ?>">

@@ -350,6 +350,107 @@ function csrf_ok(?string $token): bool
     return !empty($_SESSION['csrf']) && is_string($token) && hash_equals($_SESSION['csrf'], $token);
 }
 
+/* ---------------------------------------------------------------------
+ * Request form protection
+ * ------------------------------------------------------------------ */
+
+/** Per-install key for signing form stamps; created on first use. */
+function form_secret(): string
+{
+    static $key = null;
+    if ($key !== null) {
+        return $key;
+    }
+    $file = STORAGE . '/secret.txt';
+    if (is_file($file)) {
+        $key = trim((string) file_get_contents($file));
+    }
+    if (empty($key)) {
+        $key = bin2hex(random_bytes(32));
+        @file_put_contents($file, $key, LOCK_EX);
+        @chmod($file, 0600);
+    }
+    return $key;
+}
+
+/** Signed render time, checked on submit to catch instant bot posts. */
+function form_stamp(): string
+{
+    $t = (string) time();
+    return $t . '.' . hash_hmac('sha256', $t, form_secret());
+}
+
+function form_stamp_ok(string $value): bool
+{
+    $parts = explode('.', $value, 2);
+    if (count($parts) !== 2 || !ctype_digit($parts[0])) {
+        return false;
+    }
+    if (!hash_equals(hash_hmac('sha256', $parts[0], form_secret()), $parts[1])) {
+        return false;
+    }
+    $age = time() - (int) $parts[0];
+    // under 3s means nobody typed it; over 6h means a stale or replayed page
+    return $age >= 3 && $age <= 21600;
+}
+
+function client_ip(): string
+{
+    return (string) ($_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
+}
+
+/**
+ * Rate limit per IP: at most 5 requests in 10 minutes and 20 per day.
+ * Returns false when the caller is over the limit.
+ */
+function form_rate_ok(string $ip, bool $record = false): bool
+{
+    $file = STORAGE . '/form-throttle.json';
+    $data = json_read($file, []);
+    $now = time();
+
+    foreach ($data as $k => $stamps) {                      // forget yesterday
+        $data[$k] = array_values(array_filter((array) $stamps, fn($t) => $t > $now - 86400));
+        if (!$data[$k]) {
+            unset($data[$k]);
+        }
+    }
+    $mine = $data[$ip] ?? [];
+    $recent = count(array_filter($mine, fn($t) => $t > $now - 600));
+
+    if ($recent >= 5 || count($mine) >= 20) {
+        json_write($file, $data);
+        return false;
+    }
+    if ($record) {
+        $mine[] = $now;
+        $data[$ip] = $mine;
+        json_write($file, $data);
+    }
+    return true;
+}
+
+/** Cheap heuristics for the usual link-spam payload. */
+function looks_like_spam(string $text): bool
+{
+    if ($text === '') {
+        return false;
+    }
+    if (preg_match_all('~https?://|www\.~i', $text) >= 2) {
+        return true;
+    }
+    if (preg_match('~\[url=|\[/url\]|<a\s+href~i', $text)) {
+        return true;
+    }
+    return false;
+}
+
+/** Strip anything that could break out into extra mail headers. */
+function header_safe(string $v): string
+{
+    return trim(str_replace(["\r", "\n", "\0", '%0a', '%0d'], ' ', $v));
+}
+
 /** Store an incoming request; returns [ok, messageKey]. */
 function save_request(array $post): array
 {
@@ -359,6 +460,15 @@ function save_request(array $post): array
     if (!empty($post['website'])) {          // honeypot
         return [false, 'form.spam'];
     }
+    if (!form_stamp_ok((string) ($post['ts'] ?? ''))) {
+        return [false, 'form.spam'];
+    }
+
+    $ip = client_ip();
+    if (!form_rate_ok($ip)) {
+        return [false, 'form.too_many'];
+    }
+
     $name  = trim((string) ($post['name'] ?? ''));
     $phone = trim((string) ($post['phone'] ?? ''));
     $email = trim((string) ($post['email'] ?? ''));
@@ -367,9 +477,17 @@ function save_request(array $post): array
     if ($name === '' || $phone === '') {
         return [false, 'form.error'];
     }
+    if (strlen(preg_replace('/\D/', '', $phone)) < 7) {
+        return [false, 'form.error_phone'];
+    }
     if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return [false, 'form.error_mail'];
     }
+    if (looks_like_spam($msg) || looks_like_spam($name)) {
+        return [false, 'form.spam'];
+    }
+
+    form_rate_ok($ip, true);                 // count this one
 
     $file = STORAGE . '/messages.json';
     $all = json_read($file, []);
@@ -383,9 +501,13 @@ function save_request(array $post): array
         'car'     => mb_substr(trim((string) ($post['car'] ?? '')), 0, 160),
         'lang'    => lang(),
         'page'    => mb_substr((string) ($post['page'] ?? ''), 0, 200),
-        'ip'      => $_SERVER['REMOTE_ADDR'] ?? '',
+        'ip'      => $ip,
         'status'  => 'new',
     ];
+    // keep the file from growing without bound
+    if (count($all) > 2000) {
+        $all = array_slice($all, -2000);
+    }
     json_write($file, $all);
 
     notify_email(end($all));
@@ -408,10 +530,13 @@ function notify_email(array $msg): void
         . "Page:    {$msg['page']}\n"
         . "Date:    {$msg['date']}\n\n"
         . "Message:\n{$msg['message']}\n";
-    $headers = "From: {$brand} <no-reply@carclub.az>\r\n"
+    $host = preg_replace('~^https?://~', '', site_host());
+    $from = 'no-reply@' . (preg_replace('~[^a-z0-9.\-]~i', '', $host) ?: 'carclub.az');
+    $headers = 'From: ' . header_safe($brand) . ' <' . $from . ">\r\n"
         . "Content-Type: text/plain; charset=UTF-8\r\n";
-    if ($msg['email'] !== '') {
-        $headers .= "Reply-To: {$msg['email']}\r\n";
+    // only a validated address may reach a header line
+    if ($msg['email'] !== '' && filter_var($msg['email'], FILTER_VALIDATE_EMAIL)) {
+        $headers .= 'Reply-To: ' . header_safe($msg['email']) . "\r\n";
     }
     @mail($to, $subject, $body, $headers);
 }
