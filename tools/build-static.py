@@ -72,8 +72,10 @@ def rewrite(html, lang, cars):
 
     # assets: /assets/x.css?v=1 -> ../assets/x.css?v=1
     # the ?v= is kept on purpose: without it a browser happily serves a stale
-    # stylesheet from cache after the snapshot is rebuilt
-    html = re.sub(r'(["\'(])/assets/([^"\'?)]+)(\?[^"\')]*)?',
+    # stylesheet from cache after the snapshot is rebuilt.
+    # The leading class also covers srcset, where URLs follow a comma or space
+    # rather than a quote.
+    html = re.sub(r'(["\'(,]\s*|\s)/assets/([^"\'?)\s]+)(\?[^"\')\s]*)?',
                   lambda m: m.group(1) + up + '../assets/' + m.group(2) + (m.group(3) or ''), html)
 
     # absolute URLs the server printed for canonical/og/hreflang: keep them,

@@ -41,9 +41,19 @@ $mail = cfg('contacts.email', '');
 
     <link rel="icon" href="<?= e(img('favicon.ico')) ?>" sizes="any">
     <link rel="apple-touch-icon" href="<?= e(img('favicon.png')) ?>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <?php
+    /* Montserrat is served from this domain, so there is no extra DNS lookup
+       and TLS handshake before the first text can be painted. Preload only the
+       subset this language actually needs. */
+    $subset = $L === 'ru' ? 'cyrillic' : 'latin';   // ar still needs latin for the brand and numbers
+    ?>
+    <?php foreach ([400, 800] as $w): ?>
+        <?php /* no ?v= here: fonts.css references the plain path and a
+                 mismatched URL would make the browser fetch the file twice */ ?>
+        <link rel="preload" as="font" type="font/woff2" crossorigin
+            href="<?= e(base_url() . "/assets/fonts/montserrat-{$w}-{$subset}.woff2") ?>">
+    <?php endforeach; ?>
+    <link rel="stylesheet" href="<?= e(asset('css/fonts.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/style.css')) ?>">
 
     <script type="application/ld+json">

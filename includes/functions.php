@@ -169,6 +169,50 @@ function img(string $path): string
     return asset('img/' . ltrim($path, '/'));
 }
 
+/**
+ * <picture> using the WebP variants built by tools/optimize-images.py.
+ *
+ * Falls back to a plain <img> with the original file when the variants are
+ * missing, so the site still renders before the script has ever been run.
+ *
+ *   picture('cars/bmw-1.jpeg', 'BMW G30', '(max-width:767px) 100vw, 380px',
+ *           ['class' => 'car__img', 'width' => 800, 'height' => 500])
+ */
+function picture(string $path, string $alt, string $sizes = '100vw', array $attr = []): string
+{
+    $rel  = ltrim($path, '/');
+    $base = preg_replace('/\.(jpe?g|png)$/i', '', $rel);
+    $have = is_file(ROOT . '/assets/img/' . $base . '-800.webp');
+
+    $a = '';
+    foreach ($attr as $k => $v) {
+        $a .= $v === true ? ' ' . $k : ' ' . $k . '="' . e((string) $v) . '"';
+    }
+
+    if (!$have) {
+        return '<img src="' . e(img($rel)) . '" alt="' . e($alt) . '"' . $a . '>';
+    }
+
+    $widths = [400, 800, 1400];
+    $srcset = function (string $ext) use ($base, $widths): string {
+        $out = [];
+        foreach ($widths as $w) {
+            if (is_file(ROOT . '/assets/img/' . $base . '-' . $w . '.' . $ext)) {
+                $out[] = e(img($base . '-' . $w . '.' . $ext)) . ' ' . $w . 'w';
+            }
+        }
+        return implode(', ', $out);
+    };
+    $webp = $srcset('webp');
+    $jpg  = $srcset('jpg');
+
+    return '<picture>'
+        . '<source type="image/webp" srcset="' . $webp . '" sizes="' . e($sizes) . '">'
+        . '<img src="' . e(img($base . '-1400.jpg')) . '" srcset="' . $jpg . '" sizes="' . e($sizes) . '"'
+        . ' alt="' . e($alt) . '"' . $a . '>'
+        . '</picture>';
+}
+
 function e(?string $s): string
 {
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');

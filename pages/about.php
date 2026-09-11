@@ -30,8 +30,9 @@ require __DIR__ . '/../includes/header.php';
     <?= $aboutBg !== '' ? 'style="--texture:url(\'' . e(img(ltrim($aboutBg, 'img/'))) . '\')"' : '' ?>>
     <div class="wrap about">
         <div class="about__media reveal">
-            <img src="<?= e(img(ltrim(cfg('settings.about_image', 'img/site/rentacar.jpg'), 'img/'))) ?>"
-                alt="<?= e(cfg('settings.brand', 'Carclub')) ?>" loading="lazy" width="900" height="675">
+            <?= picture(ltrim(cfg('settings.about_image', 'img/site/rentacar.jpg'), 'img/'),
+                cfg('settings.brand', 'Carclub'), '(max-width:1024px) 100vw, 560px',
+                ['loading' => 'lazy', 'decoding' => 'async', 'width' => 900, 'height' => 675]) ?>
             <div class="about__badge">
                 <b><?= e(cfg('settings.brand', 'Carclub')) ?></b>
                 <span><?= e(c('home.eyebrow')) ?></span>

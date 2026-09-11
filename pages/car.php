@@ -55,9 +55,11 @@ require __DIR__ . '/../includes/header.php';
                     <?php foreach ($gallery as $i => $g): ?>
                         <button class="gallery__shot" type="button" data-i="<?= $i ?>"
                             aria-label="<?= e($title . ' — ' . ($i + 1) . ' / ' . count($gallery)) ?>">
-                            <img src="<?= e(img(ltrim($g, 'img/'))) ?>" data-full="<?= e(img(ltrim($g, 'img/'))) ?>"
-                                alt="<?= e($title . ' — ' . ($i + 1)) ?>" width="1200" height="750"
-                                <?= $i === 0 ? 'fetchpriority="high"' : 'loading="lazy"' ?>>
+                            <?= picture(ltrim($g, 'img/'), $title . ' — ' . ($i + 1),
+                                '(max-width:1024px) 100vw, 700px',
+                                ['width' => 1200, 'height' => 750, 'decoding' => 'async',
+                                    'data-full' => img(ltrim($g, 'img/')),
+                                ] + ($i === 0 ? ['fetchpriority' => 'high'] : ['loading' => 'lazy'])) ?>
                             <span class="gallery__badge"><?= $i + 1 ?> / <?= count($gallery) ?></span>
                         </button>
                     <?php endforeach; ?>

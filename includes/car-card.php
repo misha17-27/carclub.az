@@ -11,7 +11,8 @@ $hidden = isset($ACTIVE_FILTER) && $ACTIVE_FILTER !== 'all' && ($car['body'] ?? 
 ?>
 <article class="car reveal" data-car data-tags="<?= e($tags) ?>" <?= $hidden ? 'hidden' : '' ?>>
     <a class="car__media" href="<?= e($href) ?>" tabindex="-1" aria-hidden="true">
-        <img src="<?= e(img(ltrim(car_cover($car), 'img/'))) ?>" alt="<?= e($title) ?>" loading="lazy" width="800" height="500">
+        <?= picture(ltrim(car_cover($car), 'img/'), $title, '(max-width:520px) 100vw, (max-width:1024px) 50vw, 380px',
+            ['loading' => 'lazy', 'decoding' => 'async', 'width' => 800, 'height' => 500]) ?>
         <?php if (!empty($car['body'])): ?>
             <span class="car__badge"><?= e(t('val.' . $car['body'])) ?></span>
         <?php endif; ?>
