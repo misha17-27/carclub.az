@@ -103,6 +103,69 @@ function admin_users_file(): string
     return STORAGE . '/admin-users.json';
 }
 
+/**
+ * Password rescue for hosting without shell access.
+ *
+ * Put a file storage/admin-reset.txt next to the data with either
+ *     newpassword
+ *     admin@carclub.az:newpassword
+ * and it is applied on the next visit to the panel, then deleted. The folder
+ * is not reachable over HTTP, so only someone with FTP or the hosting file
+ * manager can do this.
+ */
+function apply_password_reset(array $data): array
+{
+    $file = STORAGE . '/admin-reset.txt';
+    if (!is_file($file)) {
+        return $data;
+    }
+    $raw = trim((string) file_get_contents($file));
+    @unlink($file);                       // one shot, whatever happens next
+
+    if ($raw === '') {
+        return $data;
+    }
+    if (strpos($raw, ':') !== false) {
+        [$email, $pass] = array_map('trim', explode(':', $raw, 2));
+    } else {
+        $email = '';
+        $pass = $raw;
+    }
+    if (strlen($pass) < 8) {
+        return $data;
+    }
+
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+    $done = false;
+    foreach ($data['users'] as $i => $u) {
+        if ($email === '' || strcasecmp((string) $u['email'], $email) === 0) {
+            $data['users'][$i]['pass_hash'] = $hash;
+            $data['users'][$i]['active'] = 1;
+            $done = true;
+            if ($email === '') {
+                break;                    // no address given: first account
+            }
+        }
+    }
+    if (!$done && $email !== '' && filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $data['users'][] = [
+            'id' => (int) ($data['next_id'] ?? 2),
+            'name' => 'Admin',
+            'email' => $email,
+            'pass_hash' => $hash,
+            'role' => 'admin',
+            'active' => 1,
+            'last_login' => null,
+        ];
+        $data['next_id'] = (int) ($data['next_id'] ?? 2) + 1;
+        $done = true;
+    }
+    if ($done) {
+        save_admin_users($data);
+    }
+    return $data;
+}
+
 function admin_users(): array
 {
     if (isset($GLOBALS['__users'])) {
@@ -110,7 +173,7 @@ function admin_users(): array
     }
     $data = json_read(admin_users_file(), []);
     if (!empty($data['users'])) {
-        return $GLOBALS['__users'] = $data;
+        return $GLOBALS['__users'] = apply_password_reset($data);
     }
 
     // first run: create an admin with a random password, written next to the data

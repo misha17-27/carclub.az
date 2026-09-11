@@ -2,6 +2,7 @@
 .DS_Store
 Thumbs.db
 storage/admin-password.txt
+storage/admin-reset.txt
 storage/admin-users.json
 storage/form-throttle.json
 storage/login-throttle.json

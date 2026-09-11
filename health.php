@@ -41,6 +41,21 @@ if (is_dir($dir)) {
     echo "  permissions     : " . substr(sprintf('%o', fileperms($dir)), -4) . "\n";
 }
 
+echo "\nADMIN ACCOUNT\n";
+$users = $root . '/storage/admin-users.json';
+if (!is_file($users)) {
+    echo "  not created yet — open /admin/ once and the first account appears\n";
+} else {
+    $d = json_decode((string) file_get_contents($users), true);
+    foreach ($d['users'] ?? [] as $u) {
+        echo sprintf("  %-28s role %-8s %s\n", $u['email'] ?? '?', $u['role'] ?? '?',
+            (int) ($u['active'] ?? 1) === 1 ? 'active' : 'disabled');
+    }
+}
+$pw = $root . '/storage/admin-password.txt';
+echo "  password file   : " . (is_file($pw) ? 'storage/admin-password.txt (read it, then delete)' : 'not present') . "\n";
+echo "  to reset        : put storage/admin-reset.txt with \"email:newpassword\", then log in\n";
+
 echo "\nLEFTOVER WORDPRESS\n";
 $wp = 0;
 foreach (['wp-config.php', 'wp-admin', 'wp-includes', 'wp-content', 'wp-login.php'] as $f) {
