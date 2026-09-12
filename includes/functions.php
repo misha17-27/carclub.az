@@ -353,6 +353,40 @@ function body_label(string $code, ?string $lang = null): string
  * (stored as "video/name.mp4" under assets). Returns null when the field is
  * empty, so the block simply does not appear for cars without a video.
  */
+/** Raw video entries of a car, from the list or the single legacy field. */
+function car_video_list(array $car): array
+{
+    $raw = $car['videos'] ?? null;
+    if (!is_array($raw)) {
+        $raw = [];
+        $one = trim((string) ($car['video'] ?? ''));
+        if ($one !== '') {
+            $raw[] = $one;
+        }
+    }
+    $out = [];
+    foreach ($raw as $v) {
+        $v = trim((string) $v);
+        if ($v !== '' && !in_array($v, $out, true)) {
+            $out[] = $v;
+        }
+    }
+    return $out;
+}
+
+/** Parsed, ready-to-render videos — entries we cannot play are dropped. */
+function car_videos(array $car): array
+{
+    $out = [];
+    foreach (car_video_list($car) as $v) {
+        $parsed = car_video(['video' => $v]);
+        if ($parsed) {
+            $out[] = $parsed;
+        }
+    }
+    return $out;
+}
+
 function car_video(array $car): ?array
 {
     $v = trim((string) ($car['video'] ?? ''));

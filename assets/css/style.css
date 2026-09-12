@@ -1302,6 +1302,19 @@ body.nav-open .drawer__panel {
     margin-bottom: 12px;
 }
 
+.car-video__list {
+    display: grid;
+    gap: 14px;
+}
+
+/* two across once there is more than one, so a long list does not
+   push the rest of the page down */
+@media (min-width: 700px) {
+    .car-video__list--many {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 .car-video__frame {
     display: block;
     width: 100%;

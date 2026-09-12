@@ -66,29 +66,33 @@ require __DIR__ . '/../includes/header.php';
                 </div>
             <?php endif; ?>
 
-            <?php if ($video = car_video($car)): ?>
+            <?php if ($videos = car_videos($car)): ?>
                 <section class="car-video" aria-label="<?= e(t('sec.video')) ?>">
                     <h2 class="h3 car-video__title"><?= e(t('sec.video')) ?></h2>
-                    <?php if ($video['type'] === 'file'): ?>
-                        <video class="car-video__frame" controls preload="none"
-                            poster="<?= e(img(ltrim($gallery[0] ?? '', 'img/'))) ?>">
-                            <source src="<?= e($video['src']) ?>" type="video/mp4">
-                        </video>
-                    <?php else: ?>
-                        <?php /* the player loads only after a click — an embedded iframe
-                                 would pull half a megabyte and trackers on every visit */ ?>
-                        <button class="car-video__frame car-video__facade" type="button"
-                            data-embed="<?= e($video['embed']) ?>" aria-label="<?= e(t('sec.play')) ?>">
-                            <?php if ($video['poster']): ?>
-                                <img src="<?= e($video['poster']) ?>" alt="" loading="lazy" width="480" height="360">
+                    <div class="car-video__list<?= count($videos) > 1 ? ' car-video__list--many' : '' ?>">
+                        <?php foreach ($videos as $video): ?>
+                            <?php if ($video['type'] === 'file'): ?>
+                                <video class="car-video__frame" controls preload="none"
+                                    poster="<?= e(img(ltrim($gallery[0] ?? '', 'img/'))) ?>">
+                                    <source src="<?= e($video['src']) ?>" type="video/mp4">
+                                </video>
+                            <?php else: ?>
+                                <?php /* the player loads only after a click — an embedded iframe
+                                         would pull half a megabyte and trackers on every visit */ ?>
+                                <button class="car-video__frame car-video__facade" type="button"
+                                    data-embed="<?= e($video['embed']) ?>" aria-label="<?= e(t('sec.play')) ?>">
+                                    <?php if ($video['poster']): ?>
+                                        <img src="<?= e($video['poster']) ?>" alt="" loading="lazy" width="480" height="360">
+                                    <?php endif; ?>
+                                    <span class="car-video__play" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24" fill="currentColor">
+                                            <path d="M8 5.5v13l11-6.5z" />
+                                        </svg>
+                                    </span>
+                                </button>
                             <?php endif; ?>
-                            <span class="car-video__play" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M8 5.5v13l11-6.5z" />
-                                </svg>
-                            </span>
-                        </button>
-                    <?php endif; ?>
+                        <?php endforeach; ?>
+                    </div>
                 </section>
             <?php endif; ?>
         </div>

@@ -521,6 +521,13 @@ function layout_top(string $active, string $title): void
 
 function layout_bottom(): void
 {
+    // stop an oversized upload before it starts: the request would run past the
+    // proxy timeout and come back as a 5xx with nothing saved
+    echo '<script>document.addEventListener("change",function(e){' .
+        'var i=e.target;if(!i.dataset||!i.dataset.maxmb||!i.files||!i.files[0])return;' .
+        'var mb=i.files[0].size/1048576,max=parseFloat(i.dataset.maxmb);' .
+        'if(mb>max){alert("Файл "+mb.toFixed(1)+" МБ, а хостинг принимает до "+max+" МБ.\\n' .
+        'Загрузите ролик на YouTube и вставьте ссылку.");i.value="";}});</script>';
     echo '</div></main></div></body></html>';
 }
 

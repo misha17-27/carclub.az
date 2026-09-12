@@ -300,16 +300,22 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $rec['color'] = trim((string) ($_POST['color'] ?? ''));
             $rec['published'] = !empty($_POST['published']);
 
-            if (!empty($_POST['video_clear'])) {
-                $rec['video'] = '';
-            } elseif ($up = admin_upload_video('video_file')) {
-                $rec['video'] = $up;
-            } else {
-                $link = trim((string) ($_POST['video'] ?? ''));
-                if ($link !== '' || !isset($rec['video'])) {
-                    $rec['video'] = $link;
+            // videos: keep the ticked ones, then append new links and the upload
+            $videos = array_values(array_intersect(
+                (array) ($_POST['keep_video'] ?? []),
+                car_video_list($rec)
+            ));
+            foreach (preg_split('~[\r\n]+~', (string) ($_POST['video_add'] ?? '')) as $line) {
+                $line = trim($line);
+                if ($line !== '' && !in_array($line, $videos, true)) {
+                    $videos[] = $line;
                 }
             }
+            if ($up = admin_upload_video('video_file')) {
+                $videos[] = $up;
+            }
+            $rec['videos'] = $videos;
+            unset($rec['video']);          // superseded by the list
 
             // keep only the photos still ticked, then append the newly uploaded ones
             $keep = array_values(array_intersect((array) ($_POST['keep'] ?? []), $rec['images'] ?? []));
@@ -632,7 +638,7 @@ elseif ($section === 'cars') {
         if ($isNew) {
             $car = ['slug' => '', 'title' => [], 'brand' => '', 'body' => 'sedan', 'year' => '', 'engine' => '',
                 'fuel' => 'benzin', 'gearbox' => 'avtomat', 'seats' => '', 'color' => '', 'published' => true,
-                'images' => [], 'cover' => 1, 'video' => ''];
+                'images' => [], 'cover' => 1, 'videos' => []];
         }
         ?>
         <p style="margin:0 0 16px"><a class="btn ghost sm" href="index.php?section=cars">← К списку</a></p>
@@ -724,28 +730,47 @@ elseif ($section === 'cars') {
                 </div>
             </div>
 
+            <?php
+            $vidList = car_video_list($car);
+            $limit = min(
+                (int) preg_replace('/\D/', '', (string) ini_get('upload_max_filesize')) ?: 2,
+                (int) preg_replace('/\D/', '', (string) ini_get('post_max_size')) ?: 8
+            );
+            ?>
             <div class="panel">
                 <h2>Видео</h2>
-                <p class="hint">Не обязательно. Вставьте ссылку на YouTube или Vimeo — на странице появится блок
-                    с видео. Файл можно загрузить, если он небольшой: хостинг ограничивает размер загрузки.</p>
-                <?php $vid = trim((string) ($car['video'] ?? '')); ?>
-                <?php if ($vid !== ''): ?>
-                    <p class="muted" style="margin:0 0 10px">
-                        Сейчас: <code><?= e($vid) ?></code>
-                        <?= car_video($car) ? '' : ' — <b>ссылка не распознана, блок не показывается</b>' ?>
-                    </p>
+                <p class="hint">Не обязательно, видео может быть несколько. Надёжнее всего ссылки на YouTube
+                    или Vimeo: они открываются быстро и не занимают место на хостинге.</p>
+
+                <?php if ($vidList): ?>
+                    <label>Добавленные видео</label>
+                    <?php foreach ($vidList as $i => $v): $ok = (bool) car_video(['video' => $v]); ?>
+                        <div class="bodyrow" style="padding:11px 14px;margin-bottom:8px">
+                            <label style="margin:0;display:flex;gap:10px;align-items:flex-start;font-weight:500">
+                                <input type="checkbox" name="keep_video[]" value="<?= e($v) ?>" checked style="width:auto;margin-top:3px">
+                                <span>
+                                    <code><?= e($v) ?></code>
+                                    <?php if (!$ok): ?>
+                                        <br><span class="muted" style="color:#b91c1c">ссылка не распознана — на сайте не показывается</span>
+                                    <?php endif; ?>
+                                </span>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                    <p class="muted" style="margin:0 0 14px">Снимите галочку, чтобы убрать видео при сохранении.</p>
                 <?php endif; ?>
-                <label for="c_video">Ссылка на видео</label>
-                <input id="c_video" type="text" name="video" value="<?= e(preg_match('~^https?://~i', $vid) ? $vid : '') ?>"
-                    placeholder="https://youtu.be/...">
+
+                <label for="c_video_add">Добавить ссылки — по одной в строке</label>
+                <textarea id="c_video_add" name="video_add" rows="3"
+                    placeholder="https://youtu.be/...&#10;https://vimeo.com/..."></textarea>
+
                 <label for="c_video_file" class="mt">Или загрузить файл (mp4, webm, mov)</label>
-                <input id="c_video_file" type="file" name="video_file" accept="video/mp4,video/webm,video/quicktime">
-                <?php if ($vid !== ''): ?>
-                    <div class="chkline">
-                        <input id="c_video_clear" type="checkbox" name="video_clear" value="1">
-                        <label for="c_video_clear" style="margin:0">Убрать видео у этого автомобиля</label>
-                    </div>
-                <?php endif; ?>
+                <input id="c_video_file" type="file" name="video_file" accept="video/mp4,video/webm,video/quicktime"
+                    data-maxmb="<?= (int) $limit ?>">
+                <p class="muted" style="margin:6px 0 0">
+                    Хостинг принимает файлы до <b><?= (int) $limit ?> МБ</b>. Ролик тяжелее лучше выложить на
+                    YouTube и вставить ссылку — иначе загрузка оборвётся по таймауту.
+                </p>
             </div>
 
             <div class="panel">

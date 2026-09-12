@@ -185,8 +185,7 @@
     });
 
     /* ---------- car video: swap the poster for the player on click ---------- */
-    var facade = doc.querySelector('.car-video__facade');
-    if (facade) {
+    doc.querySelectorAll('.car-video__facade').forEach(function (facade) {
         facade.addEventListener('click', function () {
             var frame = doc.createElement('iframe');
             frame.src = facade.getAttribute('data-embed');
@@ -199,7 +198,7 @@
             box.appendChild(frame);
             facade.replaceWith(box);
         });
-    }
+    });
 
     /* ---------- forms: validation, then straight to WhatsApp ---------- */
 
