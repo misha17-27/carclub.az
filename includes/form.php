@@ -69,6 +69,7 @@ $waLabels = json_encode([
                 <label for="<?= e($fid) ?>-msg"><?= e(t('form.message')) ?></label>
                 <textarea id="<?= e($fid) ?>-msg" name="message" placeholder="<?= e(t('form.ph_msg')) ?>"><?= e($_POST['message'] ?? '') ?></textarea>
             </div>
+            <?= turnstile_widget() ?>
             <button class="btn btn--block btn--lg" type="submit">
                 <?php if ($waNumber !== ''): ?><?= icon('whatsapp') ?><?php endif; ?>
                 <?= e($waNumber !== '' ? t('form.send_wa') : t('form.send')) ?>

@@ -8,3 +8,4 @@ storage/form-throttle.json
 storage/login-throttle.json
 storage/messages.json
 storage/secret.txt
+storage/secrets.json

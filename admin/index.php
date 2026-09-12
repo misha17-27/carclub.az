@@ -25,6 +25,8 @@ if ($section === 'login') {
         csrf_check();
         if (login_locked($ip)) {
             flash('Слишком много попыток входа. Попробуйте через 15 минут.', 'err');
+        } elseif (!turnstile_verify((string) ($_POST['cf-turnstile-response'] ?? ''))) {
+            flash('Пройдите проверку и повторите вход.', 'err');
         } elseif (attempt_login((string) ($_POST['email'] ?? ''), (string) ($_POST['password'] ?? ''))) {
             login_ok($ip);
             redirect('index.php');
@@ -45,6 +47,7 @@ if ($section === 'login') {
         <title>Вход — Carclub admin</title>
         <link rel="icon" href="<?= e(img('favicon.ico')) ?>">
         <style><?= admin_css() ?></style>
+        <?= turnstile_script() ?>
     </head>
 
     <body>
@@ -58,6 +61,9 @@ if ($section === 'login') {
                 <input id="l-email" name="email" type="email" autocomplete="username" required autofocus>
                 <label for="l-pass">Пароль</label>
                 <input id="l-pass" name="password" type="password" autocomplete="current-password" required>
+                <?php if ($w = turnstile_widget('light')): ?>
+                    <div class="mt"><?= $w ?></div>
+                <?php endif; ?>
                 <div class="mt"><button class="btn gold" style="width:100%;justify-content:center">Войти</button></div>
                 <?= flash_render() ?>
             </form>
@@ -146,6 +152,21 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         ov_save();
         flash('Настройки сохранены.');
         redirect('index.php?section=settings');
+    }
+
+    /* ---------- security ---------- */
+    if ($section === 'security' && $act === 'save') {
+        ov_set('settings.turnstile_site', trim((string) ($_POST['turnstile_site'] ?? '')));
+        ov_save();
+        // the secret never goes into site.json, and an empty field means "keep"
+        $secret = trim((string) ($_POST['turnstile_secret'] ?? ''));
+        if ($secret !== '') {
+            secret_set('turnstile_secret', $secret);
+        } elseif (!empty($_POST['clear_secret'])) {
+            secret_set('turnstile_secret', '');
+        }
+        flash('Настройки безопасности сохранены.');
+        redirect('index.php?section=security');
     }
 
     /* ---------- cars ---------- */
@@ -1022,6 +1043,69 @@ elseif ($section === 'images') {
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+    </div>
+<?php
+}
+
+/* ---------------------------------------------------------------- security */
+elseif ($section === 'security') {
+    $siteKey = val('settings.turnstile_site');
+    $hasSecret = turnstile_secret_key() !== '';
+    $on = turnstile_on();
+    ?>
+    <form method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="act" value="save">
+        <div class="panel">
+            <h2>Cloudflare Turnstile
+                <span class="badge <?= $on ? 'on' : 'off' ?>" style="margin-left:6px"><?= $on ? 'включена' : 'выключена' ?></span>
+            </h2>
+            <p class="hint">
+                Бесплатная проверка на ботов — без выбора светофоров на картинках. Создайте виджет
+                на <b>dash.cloudflare.com</b> и вставьте сюда два ключа. Пока поля пустые, проверка не работает.
+            </p>
+            <label for="ts_site">Site Key (публичный)</label>
+            <input id="ts_site" type="text" name="turnstile_site" value="<?= e($siteKey) ?>" placeholder="0x4AAAAAAA...">
+            <label for="ts_secret">Secret Key (секретный)</label>
+            <input id="ts_secret" type="password" name="turnstile_secret" autocomplete="new-password"
+                placeholder="<?= $hasSecret ? '•••••••• — оставьте пустым, чтобы не менять' : '' ?>">
+            <p class="muted" style="margin:6px 0 0">
+                Секретный ключ хранится отдельно от контента, в <code>storage/secrets.json</code>,
+                и не попадает в репозиторий.
+            </p>
+            <?php if ($hasSecret): ?>
+                <div class="chkline">
+                    <input id="ts_clear" type="checkbox" name="clear_secret" value="1">
+                    <label for="ts_clear" style="margin:0">Удалить сохранённый секретный ключ</label>
+                </div>
+            <?php endif; ?>
+            <p class="muted" style="margin:14px 0 0">Применяется к форме заявок на сайте и ко входу в эту панель.</p>
+        </div>
+        <button class="btn gold">Сохранить</button>
+    </form>
+
+    <div class="panel mt">
+        <h2>Где взять ключи</h2>
+        <ol class="hint" style="padding-left:18px;line-height:1.9">
+            <li>Откройте <b>dash.cloudflare.com</b> → раздел <b>Turnstile</b>.</li>
+            <li>Нажмите <b>Add widget</b>.</li>
+            <li>В поле Domain укажите <b>carclub.az</b>.</li>
+            <li>Widget Mode — <b>Managed</b>.</li>
+            <li>Скопируйте Site Key и Secret Key в поля выше.</li>
+        </ol>
+    </div>
+
+    <div class="panel">
+        <h2>Что защищено и без капчи</h2>
+        <ul class="hint" style="padding-left:18px;line-height:1.9">
+            <li>Пароли хранятся необратимым хэшем, вход блокируется после 10 неудачных попыток на 15 минут.</li>
+            <li>Все формы подписаны CSRF-токеном; у формы заявок есть скрытая ловушка для ботов.</li>
+            <li>Отправка быстрее трёх секунд после загрузки страницы отклоняется.</li>
+            <li>Не больше пяти заявок за десять минут и двадцати за сутки с одного адреса.</li>
+            <li>Телефон проверяется, сообщения со ссылками отсеиваются.</li>
+            <li>При загрузке проверяется тип файла; в заголовки писем нельзя подставить лишние строки.</li>
+            <li>Папка с данными закрыта от обращений по HTTP.</li>
+        </ul>
     </div>
 <?php
 }

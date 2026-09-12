@@ -41,6 +41,7 @@ return [
     'form.error_mail' => ['en' => 'Please check the email address.', 'az' => 'Zəhmət olmasa, e-poçt ünvanını yoxlayın.', 'ru' => 'Проверьте адрес электронной почты.', 'ar' => 'يرجى التحقق من البريد الإلكتروني.'],
     'form.spam'     => ['en' => 'Request could not be sent. Please try again.', 'az' => 'Sorğu göndərilmədi. Yenidən cəhd edin.', 'ru' => 'Не удалось отправить заявку. Попробуйте ещё раз.', 'ar' => 'تعذّر إرسال الطلب. حاول مرة أخرى.'],
     'form.error_phone' => ['en' => 'Please check the phone number.', 'az' => 'Zəhmət olmasa, telefon nömrəsini yoxlayın.', 'ru' => 'Проверьте номер телефона.', 'ar' => 'يرجى التحقق من رقم الهاتف.'],
+    'form.captcha'  => ['en' => 'Please complete the anti-spam check and send again.', 'az' => 'Zəhmət olmasa, yoxlamanı tamamlayıb yenidən göndərin.', 'ru' => 'Пройдите проверку и отправьте ещё раз.', 'ar' => 'يرجى إكمال التحقق ثم الإرسال مرة أخرى.'],
     'form.too_many' => ['en' => 'Too many requests from this address. Please try again later or call us.', 'az' => 'Bu ünvandan çox sayda sorğu göndərilib. Bir qədər sonra cəhd edin və ya zəng edin.', 'ru' => 'Слишком много заявок с этого адреса. Попробуйте позже или позвоните нам.', 'ar' => 'عدد كبير من الطلبات من هذا العنوان. حاول لاحقاً أو اتصل بنا.'],
     'form.wa_intro' => ['en' => 'Request from the website', 'az' => 'Sayt vasitəsilə sorğu', 'ru' => 'Заявка с сайта', 'ar' => 'طلب من الموقع'],
     'form.car'      => ['en' => 'Car', 'az' => 'Avtomobil', 'ru' => 'Автомобиль', 'ar' => 'السيارة'],

@@ -19,7 +19,8 @@
         "hero_image": "img/site/rent-a-car-for-someone-else.rendition.medium.jpg",
         "about_image": "img/site/rentacar.jpg",
         "og_image": "img/site/rentacar.jpg",
-        "form_to_whatsapp": false
+        "form_to_whatsapp": false,
+        "turnstile_site": ""
     },
     "content": {
         "ru": {

@@ -55,6 +55,8 @@ return [
         /* Send button opens WhatsApp with the filled-in request instead of
            posting quietly; the request is still stored for the admin panel. */
         'form_to_whatsapp' => true,
+        /* Turnstile: public key here, the secret one in storage/secrets.json */
+        'turnstile_site' => '',
     ],
 
     /* Brand logos on the home page strip */

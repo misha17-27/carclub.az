@@ -55,6 +55,7 @@ $mail = cfg('contacts.email', '');
     <?php endforeach; ?>
     <link rel="stylesheet" href="<?= e(asset('css/fonts.css')) ?>">
     <link rel="stylesheet" href="<?= e(asset('css/style.css')) ?>">
+    <?= turnstile_script() ?>
 
     <script type="application/ld+json">
         <?= json_encode([

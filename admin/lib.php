@@ -437,18 +437,19 @@ const SECTIONS = [
     'seo'         => ['SEO', '◎'],
     'submissions' => ['Заявки с сайта', '✉'],
     'settings'    => ['Настройки', '⚙'],
+    'security'    => ['Безопасность', '⚿'],
     'users'       => ['Пользователи', '☺'],
     'profile'     => ['Мой профиль', '☻'],
 ];
 
 const GROUPS = [
     'Контент'   => ['overview', 'cars', 'home', 'pages', 'images'],
-    'Сайт'      => ['contacts', 'seo', 'settings'],
+    'Сайт'      => ['contacts', 'seo', 'settings', 'security'],
     'Обращения' => ['submissions'],
     'Доступ'    => ['users', 'profile'],
 ];
 
-const ADMIN_ONLY = ['users', 'settings'];
+const ADMIN_ONLY = ['users', 'settings', 'security'];
 
 /** Site languages as [code => label] for the editor tabs. */
 function edit_langs(): array

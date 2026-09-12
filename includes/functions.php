@@ -395,6 +395,93 @@ function csrf_ok(?string $token): bool
 }
 
 /* ---------------------------------------------------------------------
+ * Secrets — kept out of site.json, which is committed
+ * ------------------------------------------------------------------ */
+
+function secret_get(string $key, string $default = ''): string
+{
+    static $data = null;
+    if ($data === null) {
+        $data = json_read(STORAGE . '/secrets.json', []);
+    }
+    $v = $data[$key] ?? '';
+    return is_string($v) && $v !== '' ? $v : $default;
+}
+
+function secret_set(string $key, string $value): bool
+{
+    $file = STORAGE . '/secrets.json';
+    $data = json_read($file, []);
+    $data[$key] = $value;
+    $ok = json_write($file, $data);
+    @chmod($file, 0600);
+    return $ok;
+}
+
+/* ---------------------------------------------------------------------
+ * Cloudflare Turnstile — the anti-spam check, keys live in the panel
+ * ------------------------------------------------------------------ */
+
+function turnstile_site_key(): string
+{
+    return (string) cfg('settings.turnstile_site', '');
+}
+
+function turnstile_secret_key(): string
+{
+    return secret_get('turnstile_secret');
+}
+
+function turnstile_on(): bool
+{
+    return turnstile_site_key() !== '' && turnstile_secret_key() !== '';
+}
+
+/** Renders nothing while the keys are unset, so the form keeps working. */
+function turnstile_widget(string $theme = 'dark'): string
+{
+    if (!turnstile_on()) {
+        return '';
+    }
+    return '<div class="cf-turnstile" data-sitekey="' . e(turnstile_site_key())
+        . '" data-theme="' . e($theme) . '"></div>';
+}
+
+function turnstile_script(): string
+{
+    return turnstile_on()
+        ? '<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>'
+        : '';
+}
+
+/** True when the check is off, so an unconfigured site behaves as before. */
+function turnstile_verify(string $token): bool
+{
+    if (!turnstile_on()) {
+        return true;
+    }
+    if ($token === '') {
+        return false;
+    }
+    $ctx = stream_context_create(['http' => [
+        'method'  => 'POST',
+        'timeout' => 10,
+        'header'  => 'Content-Type: application/x-www-form-urlencoded',
+        'content' => http_build_query([
+            'secret'   => turnstile_secret_key(),
+            'response' => $token,
+            'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '',
+        ]),
+    ]]);
+    $raw = @file_get_contents('https://challenges.cloudflare.com/turnstile/v0/siteverify', false, $ctx);
+    if ($raw === false) {
+        return false;
+    }
+    $data = json_decode($raw, true);
+    return !empty($data['success']);
+}
+
+/* ---------------------------------------------------------------------
  * Request form protection
  * ------------------------------------------------------------------ */
 
@@ -506,6 +593,9 @@ function save_request(array $post): array
     }
     if (!form_stamp_ok((string) ($post['ts'] ?? ''))) {
         return [false, 'form.spam'];
+    }
+    if (!turnstile_verify((string) ($post['cf-turnstile-response'] ?? ''))) {
+        return [false, 'form.captcha'];
     }
 
     $ip = client_ip();
