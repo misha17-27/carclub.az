@@ -1,280 +1,290 @@
 [
-    {
-        "slug": "toyota-camry-2022",
-        "published": true,
-        "order": 1,
-        "brand": "Toyota",
-        "body": "sedan",
-        "year": "2022",
-        "engine": "2.5 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "silver",
-        "cover": 1,
-        "images": [
-            "cars/toyota-camry-2022-cover.jpeg",
-            "cars/toyota-camry-2022-1.jpeg",
-            "cars/toyota-camry-2022-2.jpeg",
-            "cars/toyota-camry-2022-3.jpeg",
-            "cars/toyota-camry-2022-4.jpeg"
-        ],
-        "title": {
-            "en": "Toyota Camry 2022",
-            "az": "Toyota Camry 2022",
-            "ru": "Toyota Camry 2022",
-            "ar": "Toyota Camry 2022"
-        }
+  {
+    "slug": "toyota-camry-2022",
+    "published": true,
+    "order": 1,
+    "brand": "Toyota",
+    "body": "sedan",
+    "year": "2022",
+    "engine": "2.5 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "silver",
+    "cover": 1,
+    "images": [
+      "cars/toyota-camry-2022-cover.jpeg",
+      "cars/toyota-camry-2022-1.jpeg",
+      "cars/toyota-camry-2022-2.jpeg",
+      "cars/toyota-camry-2022-3.jpeg",
+      "cars/toyota-camry-2022-4.jpeg"
+    ],
+    "title": {
+      "en": "Toyota Camry 2022",
+      "az": "Toyota Camry 2022",
+      "ru": "Toyota Camry 2022",
+      "ar": "Toyota Camry 2022"
     },
-    {
-        "slug": "toyota-camry-2022-hybrid",
-        "published": true,
-        "order": 2,
-        "brand": "Toyota",
-        "body": "sedan",
-        "year": "2022",
-        "engine": "2.5 L",
-        "fuel": "hybrid",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "grey",
-        "cover": 1,
-        "images": [
-            "cars/toyota-camry-2022-hybrid-cover.jpeg",
-            "cars/toyota-camry-2022-hybrid-1.jpeg",
-            "cars/toyota-camry-2022-hybrid-2.jpeg",
-            "cars/toyota-camry-2022-hybrid-3.jpeg",
-            "cars/toyota-camry-2022-hybrid-4.jpeg",
-            "cars/toyota-camry-2022-hybrid-5.jpeg"
-        ],
-        "title": {
-            "en": "Toyota Camry 2022 Hybrid",
-            "az": "Toyota Camry 2022 Hybrid",
-            "ru": "Toyota Camry 2022 Hybrid",
-            "ar": "Toyota Camry 2022 Hybrid"
-        }
+    "video": ""
+  },
+  {
+    "slug": "toyota-camry-2022-hybrid",
+    "published": true,
+    "order": 2,
+    "brand": "Toyota",
+    "body": "sedan",
+    "year": "2022",
+    "engine": "2.5 L",
+    "fuel": "hybrid",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "grey",
+    "cover": 1,
+    "images": [
+      "cars/toyota-camry-2022-hybrid-cover.jpeg",
+      "cars/toyota-camry-2022-hybrid-1.jpeg",
+      "cars/toyota-camry-2022-hybrid-2.jpeg",
+      "cars/toyota-camry-2022-hybrid-3.jpeg",
+      "cars/toyota-camry-2022-hybrid-4.jpeg",
+      "cars/toyota-camry-2022-hybrid-5.jpeg"
+    ],
+    "title": {
+      "en": "Toyota Camry 2022 Hybrid",
+      "az": "Toyota Camry 2022 Hybrid",
+      "ru": "Toyota Camry 2022 Hybrid",
+      "ar": "Toyota Camry 2022 Hybrid"
     },
-    {
-        "slug": "bmw-g30-2021",
-        "published": true,
-        "order": 3,
-        "brand": "BMW",
-        "body": "sedan",
-        "year": "2021",
-        "engine": "2.0 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "grey",
-        "cover": 1,
-        "images": [
-            "cars/bmw-g30-2021-cover.jpeg",
-            "cars/bmw-g30-2021-1.jpeg",
-            "cars/bmw-g30-2021-2.jpeg",
-            "cars/bmw-g30-2021-3.jpeg",
-            "cars/bmw-g30-2021-4.jpeg",
-            "cars/bmw-g30-2021-5.jpeg",
-            "cars/bmw-g30-2021-6.jpeg",
-            "cars/bmw-g30-2021-7.jpeg"
-        ],
-        "title": {
-            "en": "BMW G30 2021",
-            "az": "BMW G30 2021",
-            "ru": "BMW G30 2021",
-            "ar": "BMW G30 2021"
-        }
+    "video": ""
+  },
+  {
+    "slug": "bmw-g30-2021",
+    "published": true,
+    "order": 3,
+    "brand": "BMW",
+    "body": "sedan",
+    "year": "2021",
+    "engine": "2.0 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "grey",
+    "cover": 3,
+    "images": [
+      "cars/bmw-g30-2021-cover.jpeg",
+      "cars/bmw-g30-2021-1.jpeg",
+      "cars/bmw-g30-2021-2.jpeg",
+      "cars/bmw-g30-2021-3.jpeg",
+      "cars/bmw-g30-2021-4.jpeg",
+      "cars/bmw-g30-2021-5.jpeg",
+      "cars/bmw-g30-2021-6.jpeg",
+      "cars/bmw-g30-2021-7.jpeg"
+    ],
+    "title": {
+      "en": "BMW G30 2021",
+      "az": "BMW G30 2021",
+      "ru": "BMW G30 2021",
+      "ar": "BMW G30 2021"
     },
-    {
-        "slug": "bmw-g30-2019",
-        "published": true,
-        "order": 4,
-        "brand": "BMW",
-        "body": "sedan",
-        "year": "2019",
-        "engine": "2.0 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "black",
-        "cover": 1,
-        "images": [
-            "cars/bmw-g30-2019-cover.webp",
-            "cars/bmw-g30-2019-1.jpeg",
-            "cars/bmw-g30-2019-2.jpeg",
-            "cars/bmw-g30-2019-3.jpeg"
-        ],
-        "title": {
-            "en": "BMW G30 2019",
-            "az": "BMW G30 2019",
-            "ru": "BMW G30 2019",
-            "ar": "BMW G30 2019"
-        }
+    "video": ""
+  },
+  {
+    "slug": "bmw-g30-2019",
+    "published": true,
+    "order": 4,
+    "brand": "BMW",
+    "body": "sedan",
+    "year": "2019",
+    "engine": "2.0 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "black",
+    "cover": 1,
+    "images": [
+      "cars/bmw-g30-2019-cover.webp",
+      "cars/bmw-g30-2019-1.jpeg",
+      "cars/bmw-g30-2019-2.jpeg",
+      "cars/bmw-g30-2019-3.jpeg"
+    ],
+    "title": {
+      "en": "BMW G30 2019",
+      "az": "BMW G30 2019",
+      "ru": "BMW G30 2019",
+      "ar": "BMW G30 2019"
     },
-    {
-        "slug": "kia-sorento-2020",
-        "published": true,
-        "order": 5,
-        "brand": "Kia",
-        "body": "suv",
-        "year": "2020",
-        "engine": "2.4 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "7",
-        "color": "burgundy",
-        "cover": 1,
-        "images": [
-            "cars/kia-sorento-2020-cover.jpeg",
-            "cars/kia-sorento-2020-1.jpeg",
-            "cars/kia-sorento-2020-2.jpeg",
-            "cars/kia-sorento-2020-3.jpeg",
-            "cars/kia-sorento-2020-4.jpeg",
-            "cars/kia-sorento-2020-5.jpeg",
-            "cars/kia-sorento-2020-6.jpeg",
-            "cars/kia-sorento-2020-7.jpeg"
-        ],
-        "title": {
-            "en": "Kia Sorento 2020",
-            "az": "Kia Sorento 2020",
-            "ru": "Kia Sorento 2020",
-            "ar": "Kia Sorento 2020"
-        }
+    "video": ""
+  },
+  {
+    "slug": "kia-sorento-2020",
+    "published": true,
+    "order": 5,
+    "brand": "Kia",
+    "body": "suv",
+    "year": "2020",
+    "engine": "2.4 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "7",
+    "color": "burgundy",
+    "cover": 1,
+    "images": [
+      "cars/kia-sorento-2020-cover.jpeg",
+      "cars/kia-sorento-2020-1.jpeg",
+      "cars/kia-sorento-2020-2.jpeg",
+      "cars/kia-sorento-2020-3.jpeg",
+      "cars/kia-sorento-2020-4.jpeg",
+      "cars/kia-sorento-2020-5.jpeg",
+      "cars/kia-sorento-2020-6.jpeg",
+      "cars/kia-sorento-2020-7.jpeg"
+    ],
+    "title": {
+      "en": "Kia Sorento 2020",
+      "az": "Kia Sorento 2020",
+      "ru": "Kia Sorento 2020",
+      "ar": "Kia Sorento 2020"
     },
-    {
-        "slug": "kia-sorento-2020-3",
-        "published": true,
-        "order": 6,
-        "brand": "Kia",
-        "body": "suv",
-        "year": "2020",
-        "engine": "2.4 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "7",
-        "color": "grey",
-        "cover": 1,
-        "images": [
-            "cars/kia-sorento-2020-3-cover.webp",
-            "cars/kia-sorento-2020-3-1.jpeg",
-            "cars/kia-sorento-2020-3-2.jpeg",
-            "cars/kia-sorento-2020-3-3.jpeg",
-            "cars/kia-sorento-2020-3-4.jpeg",
-            "cars/kia-sorento-2020-3-5.jpeg",
-            "cars/kia-sorento-2020-3-6.webp"
-        ],
-        "title": {
-            "en": "Kia Sorento 2020",
-            "az": "Kia Sorento 2020",
-            "ru": "Kia Sorento 2020",
-            "ar": "Kia Sorento 2020"
-        }
+    "video": ""
+  },
+  {
+    "slug": "kia-sorento-2020-3",
+    "published": true,
+    "order": 6,
+    "brand": "Kia",
+    "body": "suv",
+    "year": "2020",
+    "engine": "2.4 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "7",
+    "color": "grey",
+    "cover": 1,
+    "images": [
+      "cars/kia-sorento-2020-3-cover.webp",
+      "cars/kia-sorento-2020-3-1.jpeg",
+      "cars/kia-sorento-2020-3-2.jpeg",
+      "cars/kia-sorento-2020-3-3.jpeg",
+      "cars/kia-sorento-2020-3-4.jpeg",
+      "cars/kia-sorento-2020-3-5.jpeg",
+      "cars/kia-sorento-2020-3-6.webp"
+    ],
+    "title": {
+      "en": "Kia Sorento 2020",
+      "az": "Kia Sorento 2020",
+      "ru": "Kia Sorento 2020",
+      "ar": "Kia Sorento 2020"
     },
-    {
-        "slug": "kia-sorento-2020-2",
-        "published": true,
-        "order": 7,
-        "brand": "Kia",
-        "body": "suv",
-        "year": "2020",
-        "engine": "2.4 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "7",
-        "color": "white",
-        "cover": 1,
-        "images": [
-            "cars/kia-sorento-2020-2-cover.webp",
-            "cars/kia-sorento-2020-2-1.jpeg",
-            "cars/kia-sorento-2020-2-2.jpeg",
-            "cars/kia-sorento-2020-2-3.jpeg",
-            "cars/kia-sorento-2020-2-4.jpeg",
-            "cars/kia-sorento-2020-2-5.jpeg"
-        ],
-        "title": {
-            "en": "Kia Sorento 2020",
-            "az": "Kia Sorento 2020",
-            "ru": "Kia Sorento 2020",
-            "ar": "Kia Sorento 2020"
-        }
+    "video": ""
+  },
+  {
+    "slug": "kia-sorento-2020-2",
+    "published": true,
+    "order": 7,
+    "brand": "Kia",
+    "body": "suv",
+    "year": "2020",
+    "engine": "2.4 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "7",
+    "color": "white",
+    "cover": 1,
+    "images": [
+      "cars/kia-sorento-2020-2-cover.webp",
+      "cars/kia-sorento-2020-2-1.jpeg",
+      "cars/kia-sorento-2020-2-2.jpeg",
+      "cars/kia-sorento-2020-2-3.jpeg",
+      "cars/kia-sorento-2020-2-4.jpeg",
+      "cars/kia-sorento-2020-2-5.jpeg"
+    ],
+    "title": {
+      "en": "Kia Sorento 2020",
+      "az": "Kia Sorento 2020",
+      "ru": "Kia Sorento 2020",
+      "ar": "Kia Sorento 2020"
     },
-    {
-        "slug": "kia-sonento-2022-1-6-hybrid",
-        "published": true,
-        "order": 8,
-        "brand": "Kia",
-        "body": "suv",
-        "year": "2022",
-        "engine": "1.6 L",
-        "fuel": "hybrid",
-        "gearbox": "avtomat",
-        "seats": "6",
-        "color": "black",
-        "cover": 1,
-        "images": [
-            "cars/kia-sonento-2022-1-6-hybrid-cover.jpeg",
-            "cars/kia-sonento-2022-1-6-hybrid-1.jpeg",
-            "cars/kia-sonento-2022-1-6-hybrid-2.jpeg",
-            "cars/kia-sonento-2022-1-6-hybrid-3.jpeg",
-            "cars/kia-sonento-2022-1-6-hybrid-4.jpeg"
-        ],
-        "title": {
-            "en": "Kia Sorento 2022 1.6 Hybrid",
-            "az": "Kia Sorento 2022 1.6 Hybrid",
-            "ru": "Kia Sorento 2022 1.6 Hybrid",
-            "ar": "Kia Sorento 2022 1.6 Hybrid"
-        }
+    "video": ""
+  },
+  {
+    "slug": "kia-sonento-2022-1-6-hybrid",
+    "published": true,
+    "order": 8,
+    "brand": "Kia",
+    "body": "suv",
+    "year": "2022",
+    "engine": "1.6 L",
+    "fuel": "hybrid",
+    "gearbox": "avtomat",
+    "seats": "6",
+    "color": "black",
+    "cover": 1,
+    "images": [
+      "cars/kia-sonento-2022-1-6-hybrid-cover.jpeg",
+      "cars/kia-sonento-2022-1-6-hybrid-1.jpeg",
+      "cars/kia-sonento-2022-1-6-hybrid-2.jpeg",
+      "cars/kia-sonento-2022-1-6-hybrid-3.jpeg",
+      "cars/kia-sonento-2022-1-6-hybrid-4.jpeg"
+    ],
+    "title": {
+      "en": "Kia Sorento 2022 1.6 Hybrid",
+      "az": "Kia Sorento 2022 1.6 Hybrid",
+      "ru": "Kia Sorento 2022 1.6 Hybrid",
+      "ar": "Kia Sorento 2022 1.6 Hybrid"
     },
-    {
-        "slug": "kia-cerato-2021-2",
-        "published": true,
-        "order": 9,
-        "brand": "Kia",
-        "body": "sedan",
-        "year": "2021",
-        "engine": "2.0 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "blue",
-        "cover": 1,
-        "images": [
-            "cars/kia-cerato-2021-2-cover.jpeg",
-            "cars/kia-cerato-2021-2-1.jpeg",
-            "cars/kia-cerato-2021-2-2.jpeg",
-            "cars/kia-cerato-2021-2-3.jpeg",
-            "cars/kia-cerato-2021-2-4.jpeg"
-        ],
-        "title": {
-            "en": "Kia Cerato 2021",
-            "az": "Kia Cerato 2021",
-            "ru": "Kia Cerato 2021",
-            "ar": "Kia Cerato 2021"
-        }
+    "video": ""
+  },
+  {
+    "slug": "kia-cerato-2021-2",
+    "published": true,
+    "order": 9,
+    "brand": "Kia",
+    "body": "sedan",
+    "year": "2021",
+    "engine": "2.0 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "blue",
+    "cover": 1,
+    "images": [
+      "cars/kia-cerato-2021-2-cover.jpeg",
+      "cars/kia-cerato-2021-2-1.jpeg",
+      "cars/kia-cerato-2021-2-2.jpeg",
+      "cars/kia-cerato-2021-2-3.jpeg",
+      "cars/kia-cerato-2021-2-4.jpeg"
+    ],
+    "title": {
+      "en": "Kia Cerato 2021",
+      "az": "Kia Cerato 2021",
+      "ru": "Kia Cerato 2021",
+      "ar": "Kia Cerato 2021"
     },
-    {
-        "slug": "kia-cerato-2021",
-        "published": true,
-        "order": 10,
-        "brand": "Kia",
-        "body": "sedan",
-        "year": "2021",
-        "engine": "2.0 L",
-        "fuel": "benzin",
-        "gearbox": "avtomat",
-        "seats": "4",
-        "color": "white",
-        "cover": 1,
-        "images": [
-            "cars/kia-cerato-2021-cover.jpeg",
-            "cars/kia-cerato-2021-1.jpeg",
-            "cars/kia-cerato-2021-2.jpeg",
-            "cars/kia-cerato-2021-3.jpeg"
-        ],
-        "title": {
-            "en": "Kia Cerato 2021",
-            "az": "Kia Cerato 2021",
-            "ru": "Kia Cerato 2021",
-            "ar": "Kia Cerato 2021"
-        }
-    }
+    "video": ""
+  },
+  {
+    "slug": "kia-cerato-2021",
+    "published": true,
+    "order": 10,
+    "brand": "Kia",
+    "body": "sedan",
+    "year": "2021",
+    "engine": "2.0 L",
+    "fuel": "benzin",
+    "gearbox": "avtomat",
+    "seats": "4",
+    "color": "white",
+    "cover": 1,
+    "images": [
+      "cars/kia-cerato-2021-cover.jpeg",
+      "cars/kia-cerato-2021-1.jpeg",
+      "cars/kia-cerato-2021-2.jpeg",
+      "cars/kia-cerato-2021-3.jpeg"
+    ],
+    "title": {
+      "en": "Kia Cerato 2021",
+      "az": "Kia Cerato 2021",
+      "ru": "Kia Cerato 2021",
+      "ar": "Kia Cerato 2021"
+    },
+    "video": ""
+  }
 ]

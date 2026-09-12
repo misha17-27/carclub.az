@@ -80,6 +80,8 @@ return [
     'sec.useful_links'  => ['en' => 'Useful links', 'az' => 'Faydalı keçidlər', 'ru' => 'Полезные ссылки', 'ar' => 'روابط مفيدة'],
     'sec.contact_us'    => ['en' => 'Contact us', 'az' => 'Bizimlə əlaqə', 'ru' => 'Свяжитесь с нами', 'ar' => 'اتصل بنا'],
     'sec.similar'       => ['en' => 'Similar cars', 'az' => 'Oxşar avtomobillər', 'ru' => 'Похожие автомобили', 'ar' => 'سيارات مشابهة'],
+    'sec.video'         => ['en' => 'Video', 'az' => 'Video', 'ru' => 'Видео', 'ar' => 'فيديو'],
+    'sec.play'          => ['en' => 'Play the video', 'az' => 'Videonu oynat', 'ru' => 'Смотреть видео', 'ar' => 'تشغيل الفيديو'],
     'sec.gallery'       => ['en' => 'Gallery', 'az' => 'Qalereya', 'ru' => 'Галерея', 'ar' => 'معرض الصور'],
     'sec.our_location'  => ['en' => 'Our location', 'az' => 'Yerləşdiyimiz yer', 'ru' => 'Мы на карте', 'ar' => 'موقعنا'],
     'sec.why_us'        => ['en' => 'Why Carclub', 'az' => 'Niyə Carclub', 'ru' => 'Почему Carclub', 'ar' => 'لماذا كار كلوب'],

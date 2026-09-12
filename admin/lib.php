@@ -366,6 +366,29 @@ function admin_move(string $tmp, string $name): ?string
     return move_uploaded_file($tmp, "$dir/$name") ? 'uploads/' . $name : null;
 }
 
+/** Video upload — kept apart from images, different types and size limits. */
+function admin_upload_video(string $field): ?string
+{
+    if (empty($_FILES[$field]['name'])) {
+        return null;
+    }
+    $name = preg_replace('/[^A-Za-z0-9._-]/', '_', basename((string) $_FILES[$field]['name'])) ?? '';
+    $ext  = strtolower(pathinfo($name, PATHINFO_EXTENSION));
+    if (!in_array($ext, ['mp4', 'webm', 'mov'], true)) {
+        return null;
+    }
+    $tmp = (string) $_FILES[$field]['tmp_name'];
+    if (!is_uploaded_file($tmp)) {
+        return null;
+    }
+    $dir = ROOT . '/assets/video';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0775, true);
+    }
+    $name = time() . '_' . $name;
+    return move_uploaded_file($tmp, "$dir/$name") ? 'video/' . $name : null;
+}
+
 function admin_upload(string $field): ?string
 {
     if (empty($_FILES[$field]['name'])) {

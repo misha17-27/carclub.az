@@ -316,6 +316,45 @@ function car_gallery(array $car): array
     return array_values($imgs);
 }
 
+/**
+ * Video attached to a car, if any.
+ *
+ * Accepts a YouTube or Vimeo link, or a file uploaded through the panel
+ * (stored as "video/name.mp4" under assets). Returns null when the field is
+ * empty, so the block simply does not appear for cars without a video.
+ */
+function car_video(array $car): ?array
+{
+    $v = trim((string) ($car['video'] ?? ''));
+    if ($v === '') {
+        return null;
+    }
+
+    if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|shorts/|live/)|youtu\.be/)([A-Za-z0-9_-]{6,})~i', $v, $m)) {
+        return [
+            'type'   => 'youtube',
+            'embed'  => 'https://www.youtube-nocookie.com/embed/' . $m[1] . '?autoplay=1&rel=0',
+            'poster' => 'https://i.ytimg.com/vi/' . $m[1] . '/hqdefault.jpg',
+        ];
+    }
+    if (preg_match('~vimeo\.com/(?:video/)?(\d+)~i', $v, $m)) {
+        return [
+            'type'   => 'vimeo',
+            'embed'  => 'https://player.vimeo.com/video/' . $m[1] . '?autoplay=1',
+            'poster' => '',
+        ];
+    }
+    if (preg_match('~^https?://~i', $v)) {
+        return null;                      // unknown service — better to show nothing
+    }
+
+    $rel = ltrim($v, '/');
+    if (!is_file(ROOT . '/assets/' . $rel)) {
+        return null;
+    }
+    return ['type' => 'file', 'src' => asset($rel), 'poster' => ''];
+}
+
 /** Human-readable spec rows for one car. */
 function car_specs(array $car): array
 {

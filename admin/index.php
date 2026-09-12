@@ -223,6 +223,17 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $rec['color'] = trim((string) ($_POST['color'] ?? ''));
             $rec['published'] = !empty($_POST['published']);
 
+            if (!empty($_POST['video_clear'])) {
+                $rec['video'] = '';
+            } elseif ($up = admin_upload_video('video_file')) {
+                $rec['video'] = $up;
+            } else {
+                $link = trim((string) ($_POST['video'] ?? ''));
+                if ($link !== '' || !isset($rec['video'])) {
+                    $rec['video'] = $link;
+                }
+            }
+
             // keep only the photos still ticked, then append the newly uploaded ones
             $keep = array_values(array_intersect((array) ($_POST['keep'] ?? []), $rec['images'] ?? []));
             foreach (admin_upload_multi('photos') as $p) {
@@ -544,7 +555,7 @@ elseif ($section === 'cars') {
         if ($isNew) {
             $car = ['slug' => '', 'title' => [], 'brand' => '', 'body' => 'sedan', 'year' => '', 'engine' => '',
                 'fuel' => 'benzin', 'gearbox' => 'avtomat', 'seats' => '', 'color' => '', 'published' => true,
-                'images' => [], 'cover' => 1];
+                'images' => [], 'cover' => 1, 'video' => ''];
         }
         ?>
         <p style="margin:0 0 16px"><a class="btn ghost sm" href="index.php?section=cars">← К списку</a></p>
@@ -628,6 +639,30 @@ elseif ($section === 'cars') {
                         </select>
                     </div>
                 </div>
+            </div>
+
+            <div class="panel">
+                <h2>Видео</h2>
+                <p class="hint">Не обязательно. Вставьте ссылку на YouTube или Vimeo — на странице появится блок
+                    с видео. Файл можно загрузить, если он небольшой: хостинг ограничивает размер загрузки.</p>
+                <?php $vid = trim((string) ($car['video'] ?? '')); ?>
+                <?php if ($vid !== ''): ?>
+                    <p class="muted" style="margin:0 0 10px">
+                        Сейчас: <code><?= e($vid) ?></code>
+                        <?= car_video($car) ? '' : ' — <b>ссылка не распознана, блок не показывается</b>' ?>
+                    </p>
+                <?php endif; ?>
+                <label for="c_video">Ссылка на видео</label>
+                <input id="c_video" type="text" name="video" value="<?= e(preg_match('~^https?://~i', $vid) ? $vid : '') ?>"
+                    placeholder="https://youtu.be/...">
+                <label for="c_video_file" class="mt">Или загрузить файл (mp4, webm, mov)</label>
+                <input id="c_video_file" type="file" name="video_file" accept="video/mp4,video/webm,video/quicktime">
+                <?php if ($vid !== ''): ?>
+                    <div class="chkline">
+                        <input id="c_video_clear" type="checkbox" name="video_clear" value="1">
+                        <label for="c_video_clear" style="margin:0">Убрать видео у этого автомобиля</label>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="panel">

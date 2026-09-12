@@ -184,6 +184,23 @@
         if (e.key === 'ArrowRight') step(1);
     });
 
+    /* ---------- car video: swap the poster for the player on click ---------- */
+    var facade = doc.querySelector('.car-video__facade');
+    if (facade) {
+        facade.addEventListener('click', function () {
+            var frame = doc.createElement('iframe');
+            frame.src = facade.getAttribute('data-embed');
+            frame.title = facade.getAttribute('aria-label') || 'Video';
+            frame.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+            frame.allowFullscreen = true;
+            frame.loading = 'lazy';
+            var box = doc.createElement('div');
+            box.className = 'car-video__frame';
+            box.appendChild(frame);
+            facade.replaceWith(box);
+        });
+    }
+
     /* ---------- forms: validation, then straight to WhatsApp ---------- */
 
     function waMessage(f, labels) {
