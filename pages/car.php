@@ -72,9 +72,11 @@ require __DIR__ . '/../includes/header.php';
                     <div class="car-video__list<?= count($videos) > 1 ? ' car-video__list--many' : '' ?>">
                         <?php foreach ($videos as $video): ?>
                             <?php if ($video['type'] === 'file'): ?>
-                                <video class="car-video__frame" controls preload="none"
-                                    poster="<?= e(img(ltrim($gallery[0] ?? '', 'img/'))) ?>">
-                                    <source src="<?= e($video['src']) ?>" type="video/mp4">
+                                <?php /* no poster: the video shows its own first frame.
+                                         "#t=0.1" makes the browser decode that frame instead
+                                         of painting a black rectangle. */ ?>
+                                <video class="car-video__frame" controls preload="metadata" playsinline>
+                                    <source src="<?= e($video['src']) ?>#t=0.1" type="video/mp4">
                                 </video>
                             <?php else: ?>
                                 <?php /* the player loads only after a click — an embedded iframe
