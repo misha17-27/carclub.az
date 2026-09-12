@@ -316,6 +316,36 @@ function car_gallery(array $car): array
     return array_values($imgs);
 }
 
+/* ---------------------------------------------------------------------
+ * Body types
+ * ------------------------------------------------------------------ */
+
+/** [code => [lang => label]], as configured in the panel. */
+function body_types(): array
+{
+    $list = cfg('body_types', []);
+    return is_array($list) ? $list : [];
+}
+
+/** Visitor-facing name of a body type in the current language. */
+function body_label(string $code, ?string $lang = null): string
+{
+    if ($code === '') {
+        return '';
+    }
+    $l = $lang ?: lang();
+    $row = body_types()[$code] ?? null;
+    if (is_array($row)) {
+        $v = $row[$l] ?? $row[cfg('default_lang', 'en')] ?? '';
+        if ($v !== '') {
+            return (string) $v;
+        }
+    }
+    // older data may still rely on the built-in strings
+    $fallback = t('val.' . $code, $l);
+    return $fallback === 'val.' . $code ? ucfirst($code) : $fallback;
+}
+
 /**
  * Video attached to a car, if any.
  *
@@ -375,7 +405,7 @@ function car_specs(array $car): array
         $rows['seats'] = ['icon' => 'seats', 'label' => t('spec.seats'), 'value' => $car['seats']];
     }
     if (!empty($car['body'])) {
-        $rows['body'] = ['icon' => 'car', 'label' => t('spec.body'), 'value' => t('val.' . $car['body'])];
+        $rows['body'] = ['icon' => 'car', 'label' => t('spec.body'), 'value' => body_label($car['body'])];
     }
     if (!empty($car['color'])) {
         $rows['color'] = ['icon' => 'palette', 'label' => t('spec.color'), 'value' => t('val.' . $car['color'])];

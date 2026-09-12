@@ -30,5 +30,25 @@
                 "title_accent": "в Баку"
             }
         }
+    },
+    "body_types": {
+        "sedan": {
+            "en": "Sedan",
+            "az": "Sedan",
+            "ru": "Седан",
+            "ar": "سيدان"
+        },
+        "suv": {
+            "en": "SUV",
+            "az": "SUV",
+            "ru": "Внедорожник",
+            "ar": "دفع رباعي"
+        },
+        "minivan": {
+            "en": "Minivan",
+            "az": "Minivan",
+            "ru": "Минивэн",
+            "ar": "ميني فان"
+        }
     }
 }

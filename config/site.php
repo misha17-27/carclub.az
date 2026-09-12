@@ -59,6 +59,16 @@ return [
         'turnstile_site' => '',
     ],
 
+    /* ------------------------------------------------------------------
+     * Body types. Editable in the panel — the key is used in URLs and in
+     * the filter, the values are what visitors see in each language.
+     * ------------------------------------------------------------------ */
+    'body_types' => [
+        'sedan'   => ['en' => 'Sedan',   'az' => 'Sedan',   'ru' => 'Седан',        'ar' => 'سيدان'],
+        'suv'     => ['en' => 'SUV',     'az' => 'SUV',     'ru' => 'Внедорожник',  'ar' => 'دفع رباعي'],
+        'minivan' => ['en' => 'Minivan', 'az' => 'Minivan', 'ru' => 'Минивэн',      'ar' => 'ميني فان'],
+    ],
+
     /* Brand logos on the home page strip */
     'brands' => [
         ['file' => 'img/brands/hyundai.webp',     'name' => 'Hyundai'],

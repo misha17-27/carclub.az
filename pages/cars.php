@@ -19,7 +19,7 @@ if (!in_array($active, $bodies, true)) {
     $active = 'all';
 }
 $pageTitle = c('cars.title');
-$heading   = $active === 'all' ? $pageTitle : t('val.' . $active);
+$heading   = $active === 'all' ? $pageTitle : body_label($active);
 
 $SEO_TITLE = $active === 'all'
     ? c('cars.seo_title')
@@ -56,8 +56,8 @@ require __DIR__ . '/../includes/header.php';
             </button>
             <?php foreach ($bodies as $b): ?>
                 <button class="chip<?= $active === $b ? ' is-active' : '' ?>" type="button" data-filter="<?= e($b) ?>"
-                    data-label="<?= e(t('val.' . $b)) ?>" aria-pressed="<?= $active === $b ? 'true' : 'false' ?>">
-                    <?= e(t('val.' . $b)) ?> <span class="chip__n"><?= (int) ($counts[$b] ?? 0) ?></span>
+                    data-label="<?= e(body_label($b)) ?>" aria-pressed="<?= $active === $b ? 'true' : 'false' ?>">
+                    <?= e(body_label($b)) ?> <span class="chip__n"><?= (int) ($counts[$b] ?? 0) ?></span>
                 </button>
             <?php endforeach; ?>
         </div>

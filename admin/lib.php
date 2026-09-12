@@ -453,6 +453,7 @@ function messages_save(array $list): bool
 const SECTIONS = [
     'overview'    => ['Обзор', '▤'],
     'cars'        => ['Автомобили', '◆'],
+    'bodies'      => ['Типы кузова', '▤'],
     'home'        => ['Главная страница', '★'],
     'pages'       => ['Тексты страниц', '¶'],
     'images'      => ['Изображения', '▣'],
@@ -466,7 +467,7 @@ const SECTIONS = [
 ];
 
 const GROUPS = [
-    'Контент'   => ['overview', 'cars', 'home', 'pages', 'images'],
+    'Контент'   => ['overview', 'cars', 'bodies', 'home', 'pages', 'images'],
     'Сайт'      => ['contacts', 'seo', 'settings', 'security'],
     'Обращения' => ['submissions'],
     'Доступ'    => ['users', 'profile'],
@@ -616,6 +617,9 @@ textarea.tall{min-height:190px}
 .login .sub{color:#78716c;margin:0 0 16px;font-size:13.5px}
 .login .flash{margin-top:14px}
 
+.bodyrow{border:1px solid #e7e5e4;border-radius:12px;padding:15px 17px;margin-bottom:12px}
+.bodyrow__top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:2px}
+code{background:#f5f5f4;padding:2px 7px;border-radius:5px;font-size:13px}
 .sortbtn{background:#f5f5f4;border:1px solid #d6d3d1;border-radius:7px;width:30px;height:28px;cursor:pointer;font-size:13px;line-height:1}
 .sortbtn:hover{background:#e7e5e4}
 

@@ -14,7 +14,7 @@ $hidden = isset($ACTIVE_FILTER) && $ACTIVE_FILTER !== 'all' && ($car['body'] ?? 
         <?= picture(ltrim(car_cover($car), 'img/'), $title, '(max-width:520px) 100vw, (max-width:1024px) 50vw, 380px',
             ['loading' => 'lazy', 'decoding' => 'async', 'width' => 800, 'height' => 500]) ?>
         <?php if (!empty($car['body'])): ?>
-            <span class="car__badge"><?= e(t('val.' . $car['body'])) ?></span>
+            <span class="car__badge"><?= e(body_label($car['body'])) ?></span>
         <?php endif; ?>
     </a>
     <div class="car__body">

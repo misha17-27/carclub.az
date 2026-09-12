@@ -154,6 +154,80 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         redirect('index.php?section=settings');
     }
 
+    /* ---------- body types ---------- */
+    if ($section === 'bodies') {
+        $types = body_types();
+
+        if ($act === 'save') {
+            $out = [];
+            foreach ((array) ($_POST['label'] ?? []) as $code => $labels) {
+                $code = slugify((string) $code);
+                if ($code === '' || !isset($types[$code])) {
+                    continue;
+                }
+                $row = [];
+                foreach (array_keys($ELANGS) as $l) {
+                    $row[$l] = trim((string) ($labels[$l] ?? ''));
+                }
+                $base = $row[cfg('default_lang', 'en')] ?: implode('', array_filter($row));
+                foreach ($row as $l => $v) {
+                    $row[$l] = $v !== '' ? $v : $base;
+                }
+                $out[$code] = $row;
+            }
+            if ($out) {
+                ov_set('body_types', $out);
+                ov_save();
+                flash('Названия сохранены.');
+            }
+            redirect('index.php?section=bodies');
+        }
+
+        if ($act === 'add') {
+            $labels = (array) ($_POST['new'] ?? []);
+            $def = cfg('default_lang', 'en');
+            $name = trim((string) ($labels[$def] ?? ''));
+            $code = slugify(trim((string) ($_POST['code'] ?? '')) ?: $name);
+            if ($code === '' || $name === '') {
+                flash('Укажите код и название на языке по умолчанию.', 'err');
+            } elseif (isset($types[$code])) {
+                flash('Тип кузова с таким кодом уже есть.', 'err');
+            } else {
+                $row = [];
+                foreach (array_keys($ELANGS) as $l) {
+                    $v = trim((string) ($labels[$l] ?? ''));
+                    $row[$l] = $v !== '' ? $v : $name;
+                }
+                $types[$code] = $row;
+                ov_set('body_types', $types);
+                ov_save();
+                flash('Тип кузова добавлен.');
+            }
+            redirect('index.php?section=bodies');
+        }
+
+        if ($act === 'delete') {
+            $code = (string) ($_POST['code'] ?? '');
+            $used = 0;
+            foreach (cars_load() as $c) {
+                if (($c['body'] ?? '') === $code) {
+                    $used++;
+                }
+            }
+            if ($used > 0) {
+                flash('Нельзя удалить: тип выбран у ' . $used . ' авто. Сначала смените кузов у них.', 'err');
+            } elseif (count($types) <= 1) {
+                flash('Должен остаться хотя бы один тип кузова.', 'err');
+            } else {
+                unset($types[$code]);
+                ov_set('body_types', $types);
+                ov_save();
+                flash('Тип кузова удалён.');
+            }
+            redirect('index.php?section=bodies');
+        }
+    }
+
     /* ---------- security ---------- */
     if ($section === 'security' && $act === 'save') {
         ov_set('settings.turnstile_site', trim((string) ($_POST['turnstile_site'] ?? '')));
@@ -214,7 +288,10 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
             $rec['slug'] = $slug;
             $rec['title'] = $titles;
             $rec['brand'] = trim((string) ($_POST['brand'] ?? ''));
-            $rec['body'] = in_array($_POST['body'] ?? '', ['sedan', 'suv'], true) ? (string) $_POST['body'] : 'sedan';
+            $codes = array_keys(body_types());
+            $rec['body'] = in_array($_POST['body'] ?? '', $codes, true)
+                ? (string) $_POST['body']
+                : (string) ($codes[0] ?? 'sedan');
             $rec['year'] = trim((string) ($_POST['year'] ?? ''));
             $rec['engine'] = trim((string) ($_POST['engine'] ?? ''));
             $rec['fuel'] = in_array($_POST['fuel'] ?? '', ['benzin', 'hybrid', 'dizel', 'elektro'], true) ? (string) $_POST['fuel'] : 'benzin';
@@ -594,9 +671,15 @@ elseif ($section === 'cars') {
                     <div>
                         <label for="c_body">Кузов</label>
                         <select id="c_body" name="body">
-                            <option value="sedan" <?= $car['body'] === 'sedan' ? 'selected' : '' ?>>Седан</option>
-                            <option value="suv" <?= $car['body'] === 'suv' ? 'selected' : '' ?>>Внедорожник (SUV)</option>
+                            <?php foreach (body_types() as $code => $labels): ?>
+                                <option value="<?= e($code) ?>" <?= ($car['body'] ?? '') === $code ? 'selected' : '' ?>>
+                                    <?= e((string) ($labels['ru'] ?? $labels[cfg('default_lang', 'en')] ?? $code)) ?>
+                                </option>
+                            <?php endforeach; ?>
                         </select>
+                        <p class="muted" style="margin:6px 0 0">
+                            Список — в разделе <a href="index.php?section=bodies">«Типы кузова»</a>.
+                        </p>
                     </div>
                     <div>
                         <label for="c_year">Год</label>
@@ -771,6 +854,104 @@ elseif ($section === 'cars') {
             <?php endif; ?>
         </div>
     <?php }
+}
+
+/* ------------------------------------------------------------------ bodies */
+elseif ($section === 'bodies') {
+    $types = body_types();
+    $used = [];
+    foreach (cars_load() as $c) {
+        $b = $c['body'] ?? '';
+        if ($b !== '') {
+            $used[$b] = ($used[$b] ?? 0) + 1;
+        }
+    }
+    ?>
+    <form method="post">
+        <?= csrf_field() ?>
+        <input type="hidden" name="act" value="save">
+        <div class="panel">
+            <h2>Типы кузова</h2>
+            <p class="hint">Названия видны посетителям: в фильтре каталога, на плашке карточки и в
+                характеристиках. Код используется в адресе фильтра и не меняется.</p>
+            <?php foreach ($types as $code => $labels): ?>
+                <div class="bodyrow">
+                    <div class="bodyrow__top">
+                        <b><code><?= e($code) ?></code></b>
+                        <span class="muted">
+                            <?= isset($used[$code]) ? 'выбран у ' . (int) $used[$code] . ' авто' : 'не используется' ?>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <?php foreach ($ELANGS as $l => $label): ?>
+                            <div>
+                                <label for="b_<?= e($code . '_' . $l) ?>"><?= e($label) ?></label>
+                                <input id="b_<?= e($code . '_' . $l) ?>" type="text"
+                                    name="label[<?= e($code) ?>][<?= e($l) ?>]"
+                                    value="<?= e((string) ($labels[$l] ?? '')) ?>">
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button class="btn gold">Сохранить названия</button>
+    </form>
+
+    <form method="post" class="mt">
+        <?= csrf_field() ?>
+        <input type="hidden" name="act" value="add">
+        <div class="panel">
+            <h2>Добавить тип кузова</h2>
+            <p class="hint">Например: минивэн, купе, универсал. Код можно не заполнять — он получится из названия.</p>
+            <div class="row">
+                <?php foreach ($ELANGS as $l => $label): ?>
+                    <div>
+                        <label for="n_<?= e($l) ?>"><?= e($label) ?><?= $l === cfg('default_lang', 'en') ? ' *' : '' ?></label>
+                        <input id="n_<?= e($l) ?>" type="text" name="new[<?= e($l) ?>]">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <label for="n_code">Код (латиницей, без пробелов)</label>
+            <input id="n_code" type="text" name="code" placeholder="minivan">
+        </div>
+        <button class="btn gold">Добавить</button>
+    </form>
+
+    <div class="panel mt">
+        <h2>Удаление</h2>
+        <p class="hint">Удалить можно только тип, который не выбран ни у одного автомобиля.</p>
+        <div class="tablewrap">
+            <table>
+                <tr>
+                    <th>Код</th>
+                    <th>Название</th>
+                    <th>Автомобилей</th>
+                    <th class="right"></th>
+                </tr>
+                <?php foreach ($types as $code => $labels): ?>
+                    <tr>
+                        <td><code><?= e($code) ?></code></td>
+                        <td><?= e((string) ($labels[cfg('default_lang', 'en')] ?? $code)) ?></td>
+                        <td><?= (int) ($used[$code] ?? 0) ?></td>
+                        <td class="right">
+                            <?php if (empty($used[$code]) && count($types) > 1): ?>
+                                <form method="post" style="display:inline" onsubmit="return confirm('Удалить тип кузова?')">
+                                    <?= csrf_field() ?>
+                                    <input type="hidden" name="act" value="delete">
+                                    <input type="hidden" name="code" value="<?= e($code) ?>">
+                                    <button class="btn red sm">Удалить</button>
+                                </form>
+                            <?php else: ?>
+                                <span class="muted">—</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+<?php
 }
 
 /* -------------------------------------------------------------------- home */
