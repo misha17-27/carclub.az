@@ -15,12 +15,13 @@
         "notify_email": "info@carclub.az",
         "ga_id": "",
         "host": "",
-        "home_cars": 6,
+        "home_cars": 0,
         "hero_image": "img/site/rent-a-car-for-someone-else.rendition.medium.jpg",
         "about_image": "img/site/rentacar.jpg",
         "og_image": "img/site/rentacar.jpg",
-        "form_to_whatsapp": false,
-        "turnstile_site": ""
+        "form_to_whatsapp": true,
+        "turnstile_site": "",
+        "about_bg": "img/site/rentcar.jpg"
     },
     "content": {
         "ru": {

@@ -1,7 +1,11 @@
 <?php
 $SEO_TITLE = c('home.seo_title', cfg('settings.brand', 'Carclub'));
 $SEO_DESC  = c('home.seo_desc');
-$cars = array_slice(cars_all(), 0, (int) cfg('settings.home_cars', 6));
+$limit = (int) cfg('settings.home_cars', 0);          // 0 — показывать все
+$cars  = cars_all();
+if ($limit > 0) {
+    $cars = array_slice($cars, 0, $limit);
+}
 
 $features = [];
 foreach ([1 => 'truck', 2 => 'shield', 3 => 'clock', 4 => 'car'] as $n => $ic) {

@@ -140,7 +140,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         foreach (['brand', 'notify_email', 'ga_id', 'host'] as $k) {
             ov_set('settings.' . $k, trim((string) ($_POST[$k] ?? '')));
         }
-        ov_set('settings.home_cars', max(1, min(24, (int) ($_POST['home_cars'] ?? 6))));
+        ov_set('settings.home_cars', max(0, min(48, (int) ($_POST['home_cars'] ?? 0))));
         ov_set('settings.form_to_whatsapp', !empty($_POST['form_to_whatsapp']));
         foreach (['hero_image', 'about_image', 'about_bg', 'og_image'] as $k) {
             if ($up = admin_upload($k . '_file')) {
@@ -1202,7 +1202,8 @@ elseif ($section === 'settings') {
             <div class="row">
                 <div>
                     <label for="s_cars">Сколько автомобилей показывать на главной</label>
-                    <input id="s_cars" type="number" name="home_cars" min="1" max="24" value="<?= e(val('settings.home_cars', '6')) ?>">
+                    <input id="s_cars" type="number" name="home_cars" min="0" max="48" value="<?= e(val('settings.home_cars', '0')) ?>">
+                    <p class="muted" style="margin:6px 0 0">0 — показывать весь парк.</p>
                 </div>
                 <div>
                     <label for="s_ga">Google Analytics ID</label>
