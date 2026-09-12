@@ -88,13 +88,16 @@ require __DIR__ . '/../includes/header.php';
                     <span class="eyebrow"><?= e(t('sec.our_fleet')) ?></span>
                     <h2 class="h2"><?= e(t('sec.fleet_title')) ?></h2>
                 </div>
-                <a class="btn btn--ghost" href="<?= e(url('cars')) ?>"><?= e(t('btn.all_cars')) ?><?= icon('chevron-right') ?></a>
+                <a class="btn btn--ghost section-head__link" href="<?= e(url('cars')) ?>"><?= e(t('btn.all_cars')) ?><?= icon('chevron-right') ?></a>
             </div>
             <div class="cars-grid">
                 <?php foreach ($cars as $car) {
                     include __DIR__ . '/../includes/car-card.php';
                 } ?>
             </div>
+            <p class="section-more">
+                <a class="btn btn--ghost btn--block" href="<?= e(url('cars')) ?>"><?= e(t('btn.all_cars')) ?><?= icon('chevron-right') ?></a>
+            </p>
         </div>
     </section>
 <?php endif; ?>

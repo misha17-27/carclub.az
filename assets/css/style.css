@@ -264,6 +264,14 @@ h4 {
     flex-wrap: wrap;
 }
 
+/* "All cars" sits next to the heading on wide screens; on a phone it would
+   push the cars below the fold, so there it moves under the grid instead.
+   Only one of the two links is ever rendered. */
+.section-more {
+    display: none;
+    margin-top: 26px;
+}
+
 /* ---------- buttons ---------- */
 .btn {
     --btn-bg: var(--gold-grad);
@@ -2078,6 +2086,16 @@ body.nav-open .drawer__panel {
     .section-head--row {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+@media (max-width: 767px) {
+    .section-head__link {
+        display: none;
+    }
+
+    .section-more {
+        display: block;
     }
 }
 
