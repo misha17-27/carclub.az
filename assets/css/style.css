@@ -2097,6 +2097,33 @@ body.nav-open .drawer__panel {
     .section-more {
         display: block;
     }
+
+    /* Labels differ a lot between the four languages — "Смотреть автопарк" is
+       half again as long as "View the fleet". Tighter type buys the room, and
+       wrapping is the safety net: a label may become two lines, never clipped. */
+    .btn {
+        font-size: 13px;
+        letter-spacing: .03em;
+        padding-inline: 20px;
+    }
+
+    .btn--lg {
+        font-size: 13.5px;
+        padding: 14px 22px;
+    }
+
+    .hero__cta .btn,
+    .car__foot .btn,
+    .spec-panel__actions .btn,
+    .section-more .btn {
+        white-space: normal;
+        line-height: 1.3;
+        text-align: center;
+    }
+
+    .hero__cta .btn {
+        padding-inline: 12px;
+    }
 }
 
 /* ---------- RTL (Arabic) ---------- */
